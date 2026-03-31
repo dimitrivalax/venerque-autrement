@@ -108,7 +108,7 @@ const Blog = () => {
 
   const availableBlogPosts = getAvailableBlogPosts()
 
-  const nonFeaturedPosts = availableBlogPosts.filter(post => !post.featured).sort((a, b) => b.id - a.id)
+  const nonFeaturedPosts = availableBlogPosts.sort((a, b) => b.id - a.id)
 
   const uniqueCategories = [...new Set(nonFeaturedPosts.map(post => post.category))]
   const categories = [ALL_TAB, ...uniqueCategories.sort()]
