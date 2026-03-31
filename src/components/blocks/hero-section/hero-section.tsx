@@ -26,14 +26,25 @@ const HeroSection = ({ blogData }: { blogData: BlogPost[] }) => {
     >
       <div className='mx-auto flex h-full max-w-7xl flex-col gap-16 px-4 sm:px-6 lg:px-8'>
         <div className='flex max-w-4xl flex-col items-center gap-6 self-center text-center'>
-          <Image
-            src='/images/logo-venerque-autrement.png'
-            alt='Logo Venerque Autrement'
-            width={120}
-            height={120}
-            className='size-28 drop-shadow-sm md:size-32'
-            priority
-          />
+          <div className='flex w-full flex-col items-center gap-4'>
+            <Image
+              src='/images/IMG_20200221_181209.jpg'
+              alt='Vue de Venerque au coucher du soleil'
+              width={1600}
+              height={1200}
+              className='h-auto w-full max-w-2xl rounded-lg shadow-md drop-shadow-sm md:max-w-3xl'
+              priority
+              sizes='(max-width: 768px) 100vw, (max-width: 1024px) 42rem, 48rem'
+            />
+            {/* <Image
+              src='/images/IMG_9383.jpeg'
+              alt='Photo de groupe — Venerque Autrement'
+              width={1800}
+              height={1200}
+              className='h-auto w-full max-w-2xl rounded-lg shadow-md drop-shadow-sm md:max-w-3xl'
+              sizes='(max-width: 768px) 100vw, (max-width: 1024px) 42rem, 48rem'
+            /> */}
+          </div>
           <Badge variant='outline' className='border-primary/25 text-foreground text-sm font-normal'>
             Liste participative & citoyenne — Venerque
           </Badge>
