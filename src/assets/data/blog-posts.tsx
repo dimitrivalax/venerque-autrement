@@ -17,7 +17,7 @@ export const blogPosts: BlogPost[] = [
     author,
     avatarUrl,
     readTime: 4,
-    featured: true
+    featured: false
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ export const blogPosts: BlogPost[] = [
     author,
     avatarUrl,
     readTime: 7,
-    featured: true
+    featured: false
   },
   {
     id: 3,

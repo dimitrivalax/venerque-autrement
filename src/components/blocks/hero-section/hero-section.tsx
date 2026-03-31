@@ -36,12 +36,13 @@ const HeroSection = ({ blogData }: { blogData: BlogPost[] }) => {
           <div className='flex flex-col gap-6 text-center lg:items-start lg:text-left'>
             <p className='section-eyebrow text-balance'>Liste participative & citoyenne — Venerque</p>
             <h1 className='text-foreground text-4xl leading-[1.15] font-semibold tracking-tight text-balance sm:text-5xl lg:text-[3.25rem]'>
-              Un autre Venerque, plus solidaire et plus vivant
+              Venerque Autrement
             </h1>
-            <p className='text-muted-foreground mx-auto max-w-xl text-lg leading-relaxed sm:text-xl lg:mx-0 lg:max-w-lg'>
+            <p className='text-muted-foreground mx-auto max-w-xl text-lg leading-relaxed sm:text-xl lg:mx-0 lg:max-w-lg'>Pour une nouvelle démocratie locale et participative, transparente et respectueuse de l’humain et de l’environnement à Venerque</p>
+            {/* <p className='text-muted-foreground mx-auto max-w-xl text-lg leading-relaxed sm:text-xl lg:mx-0 lg:max-w-lg'>
               Tolérance, solidarité, respect de l’Humain et du Vivant : agissons localement pour recréer du lien et une
               action communale ouverte à toutes et tous.
-            </p>
+            </p> */}
             <div className='flex flex-col gap-3 pt-1 max-sm:w-full sm:flex-row sm:justify-center lg:justify-start'>
               <Button size='lg' className='text-base max-sm:w-full' asChild>
                 <Link href='/#categories'>Lire nos articles</Link>
