@@ -54,8 +54,8 @@ const MenuNavigation = ({ navigationData, activeSection, className }: MenuNaviga
                   href={navItem.href}
                   className={cn(
                     navigationMenuTriggerStyle(),
-                    'hover:text-primary dark:hover:bg-accent/50 bg-transparent px-3 py-1.5 text-base!',
-                    isActive ? 'text-primary bg-accent/50 font-medium' : 'text-muted-foreground'
+                    'hover:text-primary dark:hover:bg-accent/50 bg-transparent px-3 py-2 text-sm font-medium tracking-tight!',
+                    isActive ? 'text-primary bg-accent/60 font-semibold' : 'text-muted-foreground'
                   )}
                 >
                   {navItem.title}

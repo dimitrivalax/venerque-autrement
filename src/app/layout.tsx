@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { Montserrat, Open_Sans } from 'next/font/google'
+import { Host_Grotesk } from 'next/font/google'
 import type { Metadata } from 'next'
 
 import { ThemeProvider } from '@/components/theme-provider'
@@ -10,15 +10,9 @@ import { cn } from '@/lib/utils'
 
 import './globals.css'
 
-const montserrat = Montserrat({
-  variable: '--font-montserrat',
-  subsets: ['latin'],
-  weight: ['500', '600', '700']
-})
-
-const openSans = Open_Sans({
-  variable: '--font-open-sans',
-  subsets: ['latin'],
+const hostGrotesk = Host_Grotesk({
+  variable: '--font-host-grotesk',
+  subsets: ['latin', 'latin-ext'],
   weight: ['400', '500', '600', '700']
 })
 
@@ -62,7 +56,7 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
     <html
       lang='fr'
-      className={cn(montserrat.variable, openSans.variable, 'flex min-h-full w-full scroll-smooth')}
+      className={cn(hostGrotesk.variable, 'flex min-h-full w-full scroll-smooth')}
       suppressHydrationWarning
     >
       <body className='flex min-h-full w-full flex-auto flex-col font-sans antialiased'>

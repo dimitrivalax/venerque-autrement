@@ -18,14 +18,14 @@ const Blog = ({ blogPosts = allBlogPosts.slice(0, 3) }: BlogProps) => {
   const router = useRouter()
 
   return (
-    <section className='py-8 sm:py-16 lg:py-24'>
-      <div className='mx-auto max-w-7xl space-y-16 px-4 py-8 sm:px-6 lg:px-8'>
-        <div className='space-y-4'>
-          <Badge variant='outline'>À lire aussi</Badge>
+    <section className='py-12 sm:py-20 lg:py-28'>
+      <div className='mx-auto max-w-7xl space-y-12 px-4 sm:px-6 lg:space-y-14 lg:px-8'>
+        <div className='max-w-3xl space-y-4'>
+          <p className='section-eyebrow'>À lire aussi</p>
 
-          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Autres articles</h2>
+          <h2 className='section-title'>Autres articles</h2>
 
-          <p className='text-muted-foreground text-lg md:text-xl'>
+          <p className='text-muted-foreground text-lg leading-relaxed md:text-xl'>
             Poursuivez la lecture avec d’autres articles du collectif.
           </p>
         </div>
@@ -34,11 +34,11 @@ const Blog = ({ blogPosts = allBlogPosts.slice(0, 3) }: BlogProps) => {
           {blogPosts.map(post => (
             <Card
               key={post.id}
-              className='group h-full cursor-pointer overflow-hidden shadow-none transition-all duration-300'
+              className='group bg-card/80 hover:border-primary/20 h-full cursor-pointer overflow-hidden rounded-2xl border border-border/60 shadow-sm transition-all duration-300 hover:shadow-md dark:bg-card/60'
               onClick={() => router.push(`/blog-detail/${post.slug}`)}
             >
-              <CardContent className='space-y-3.5'>
-                <div className='bg-muted mb-6 flex h-59.5 items-center justify-center overflow-hidden rounded-lg sm:mb-12'>
+              <CardContent className='space-y-3.5 p-5 sm:p-6'>
+                <div className='bg-muted mb-5 flex aspect-[16/10] items-center justify-center overflow-hidden rounded-xl sm:mb-6 sm:h-52 sm:aspect-auto'>
                   <Link href={`/blog-detail/${post.slug}`}>
                     <img
                       src={post.imageUrl}

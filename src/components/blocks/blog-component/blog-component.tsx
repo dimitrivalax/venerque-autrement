@@ -56,11 +56,11 @@ const BlogGrid = ({ posts, onCategoryClick }: { posts: BlogPost[]; onCategoryCli
       {posts.map(post => (
         <Card
           key={post.id}
-          className='group h-full cursor-pointer overflow-hidden shadow-none transition-all duration-300'
+          className='group bg-card/80 hover:border-primary/20 h-full cursor-pointer overflow-hidden rounded-2xl border border-border/60 shadow-sm transition-all duration-300 hover:shadow-md dark:bg-card/60'
           onClick={() => handleCardClick(post)}
         >
-          <CardContent className='space-y-3.5'>
-            <div className='bg-muted mb-6 flex h-59.5 items-center justify-center overflow-hidden rounded-lg sm:mb-12'>
+          <CardContent className='space-y-3.5 p-5 sm:p-6'>
+            <div className='bg-muted mb-5 flex aspect-[16/10] items-center justify-center overflow-hidden rounded-xl sm:mb-6 sm:aspect-auto sm:h-52'>
               <img
                 src={post.imageUrl}
                 alt={post.imageAlt}
@@ -122,10 +122,10 @@ const Blog = () => {
   }
 
   return (
-    <section className='py-8 sm:py-16 lg:py-24' id='categories'>
-      <div className='mx-auto max-w-7xl space-y-8 px-4 sm:px-6 lg:space-y-16 lg:px-8'>
-        <div className='space-y-4'>
-          {selectedTab === ALL_TAB && <p className='text-sm'>Publications</p>}
+    <section className='py-12 sm:py-20 lg:py-28' id='categories'>
+      <div className='mx-auto max-w-7xl space-y-10 px-4 sm:px-6 lg:space-y-14 lg:px-8'>
+        <div className='max-w-3xl space-y-4'>
+          {selectedTab === ALL_TAB && <p className='section-eyebrow'>Publications</p>}
           {selectedTab !== ALL_TAB && (
             <Breadcrumb>
               <BreadcrumbList>
@@ -140,23 +140,23 @@ const Blog = () => {
             </Breadcrumb>
           )}
 
-          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Nos articles & le programme en détail</h2>
+          <h2 className='section-title'>Nos articles & le programme en détail</h2>
 
-          <p className='text-muted-foreground text-lg md:text-xl'>
+          <p className='text-muted-foreground text-lg leading-relaxed md:text-xl'>
             Articles rédigés à partir de nos engagements : valeurs, gouvernance locale et projet de territoire.
           </p>
         </div>
 
-        <Tabs defaultValue={ALL_TAB} value={selectedTab} onValueChange={handleTabChange} className='gap-8 lg:gap-16'>
-          <div className='flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center'>
-            <ScrollArea className='bg-muted w-full rounded-lg sm:w-auto'>
-              <TabsList className='h-auto gap-1'>
+        <Tabs defaultValue={ALL_TAB} value={selectedTab} onValueChange={handleTabChange} className='gap-8 lg:gap-12'>
+          <div className='flex flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center'>
+            <ScrollArea className='bg-muted/80 w-full rounded-xl border border-border/50 sm:w-auto'>
+              <TabsList className='h-auto gap-0.5 bg-transparent p-1'>
                 {categories.map(category => (
                   <TabsTrigger
                     key={category}
                     value={category}
                     id={`category-${category}`}
-                    className='hover:bg-primary/10 cursor-pointer rounded-lg px-4 text-base'
+                    className='data-[state=active]:bg-background cursor-pointer rounded-lg px-4 py-2.5 text-sm font-medium shadow-sm data-[state=active]:shadow-sm'
                   >
                     {category}
                   </TabsTrigger>
@@ -165,7 +165,7 @@ const Blog = () => {
               <ScrollBar orientation='horizontal' />
             </ScrollArea>
 
-            <div className='relative max-md:w-full'>
+            <div className='relative max-md:w-full md:min-w-[220px] lg:min-w-[280px]'>
               <div className='text-muted-foreground pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center pl-3 peer-disabled:opacity-50'>
                 <SearchIcon className='size-4' />
                 <span className='sr-only'>Rechercher</span>
@@ -173,7 +173,7 @@ const Blog = () => {
               <Input
                 type='search'
                 placeholder='Rechercher un article…'
-                className='peer h-10 px-9 [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none'
+                className='peer bg-background/80 h-11 rounded-xl border-border/60 px-9 shadow-sm [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none'
               />
             </div>
           </div>

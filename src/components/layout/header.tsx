@@ -87,31 +87,33 @@ const Header = ({ navigationData, className }: HeaderProps) => {
   return (
     <header
       className={cn(
-        'bg-background sticky top-0 z-50 h-16 w-full transition-all duration-300',
-        {
-          'shadow-sm': isScrolled
-        },
+        'sticky top-0 z-50 h-16 w-full border-b border-transparent transition-all duration-300',
+        isScrolled
+          ? 'bg-background/80 shadow-sm supports-[backdrop-filter]:backdrop-blur-md border-border/40'
+          : 'bg-background',
         className
       )}
     >
-      <div className='mx-auto flex h-full max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8'>
-        <Link href='/#home' className='flex items-center gap-3'>
+      <div className='mx-auto flex h-full max-w-7xl items-center justify-between gap-4 px-4 sm:gap-6 sm:px-6 lg:px-8'>
+        <Link href='/#home' className='flex min-w-0 items-center gap-2.5 sm:gap-3'>
           <Image
             src='/images/logo-venerque-autrement.png'
             alt='Venerque Autrement'
             width={44}
             height={44}
-            className='size-11 shrink-0 rounded-full object-cover'
+            className='size-10 shrink-0 rounded-full object-cover sm:size-11'
             priority
           />
-          <span className='text-primary hidden text-[18px] font-semibold sm:inline'>Venerque Autrement</span>
+          <span className='text-foreground hidden truncate text-[17px] font-semibold tracking-tight sm:inline'>
+            Venerque Autrement
+          </span>
         </Link>
 
         <MenuNavigation navigationData={navigationData} activeSection={activeSection} className='max-lg:hidden' />
 
-        <div className='flex gap-3'>
+        <div className='flex shrink-0 items-center gap-2 sm:gap-3'>
           <ModeToggle />
-          <Button variant='outline' className='max-sm:hidden' asChild>
+          <Button className='max-sm:hidden' size='default' asChild>
             <Link href='/contact'>Nous contacter</Link>
           </Button>
 

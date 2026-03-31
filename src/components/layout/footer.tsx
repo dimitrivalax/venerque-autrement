@@ -6,23 +6,40 @@ import Logo from '@/components/logo'
 
 const Footer = () => {
   return (
-    <footer className='border-border/60 border-t'>
-      <div className='mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 max-md:flex-col sm:px-6 sm:py-6 md:gap-6 md:py-8 lg:px-8'>
-        <Link href='/'>
-          <Logo className='gap-3' />
-        </Link>
-        <div className='flex flex-wrap items-center justify-center gap-x-3 gap-y-2 whitespace-nowrap sm:gap-5'>
-          <Link
-            href='/#categories'
-            className='text-muted-foreground hover:text-foreground opacity-80 transition-opacity duration-300 hover:opacity-100'
-          >
-            Articles & programme
+    <footer className='border-border/60 bg-muted/25 border-t'>
+      <div className='mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 md:grid-cols-2 md:gap-12 md:py-14 lg:grid-cols-3 lg:px-8'>
+        <div className='space-y-3'>
+          <Link href='/' className='inline-block'>
+            <Logo className='gap-3' />
           </Link>
+          <p className='text-muted-foreground max-w-xs text-sm leading-relaxed'>
+            Liste participative pour un Venerque plus solidaire, transparent et ouvert à toutes et tous.
+          </p>
+        </div>
+        <div className='space-y-4'>
+          <p className='text-foreground text-xs font-semibold uppercase tracking-wider'>Navigation</p>
+          <nav className='flex flex-col gap-2.5 text-sm'>
+            <Link href='/#home' className='text-muted-foreground hover:text-primary transition-colors'>
+              Accueil
+            </Link>
+            <Link href='/#categories' className='text-muted-foreground hover:text-primary transition-colors'>
+              Articles & programme
+            </Link>
+            <Link href='/contact' className='text-muted-foreground hover:text-primary transition-colors'>
+              Contact
+            </Link>
+          </nav>
+        </div>
+        <div className='space-y-4 md:col-span-2 lg:col-span-1'>
+          <p className='text-foreground text-xs font-semibold uppercase tracking-wider'>S’engager</p>
+          <p className='text-muted-foreground text-sm leading-relaxed'>
+            Rejoignez le collectif ou proposez une idée pour la vie locale : chaque parcours compte.
+          </p>
           <Link
             href='/contact'
-            className='text-muted-foreground hover:text-foreground opacity-80 transition-opacity duration-300 hover:opacity-100'
+            className='text-primary inline-flex text-sm font-medium hover:underline'
           >
-            Contact
+            Nous écrire →
           </Link>
         </div>
       </div>
