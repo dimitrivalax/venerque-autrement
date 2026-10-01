@@ -7,11 +7,12 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { withBasePath } from '@/lib/paths'
 
 import BlockNoteEditor, { type BlockNoteEditorHandle } from './blocknote-editor'
 
 const RECIPIENT_EMAIL = 'dimitre@free.fr'
-const DEFAULT_AVATAR_URL = '/images/logo-venerque-autrement.png'
+const DEFAULT_AVATAR_URL = withBasePath('/images/logo-venerque-autrement.png')
 
 function isHttpUrl(value: string) {
   try {

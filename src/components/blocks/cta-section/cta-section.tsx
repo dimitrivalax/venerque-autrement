@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { withBasePath } from '@/lib/paths'
 
 const CTA = () => {
   return (
@@ -25,7 +26,7 @@ const CTA = () => {
             <div className='grid grid-cols-1 lg:grid-cols-2'>
               <div className='bg-muted/40 flex min-h-[240px] items-center justify-center p-10 lg:min-h-[320px]'>
                 <img
-                  src='/images/logo-venerque-autrement.png'
+                  src={withBasePath('/images/logo-venerque-autrement.png')}
                   alt='Venerque Autrement'
                   className='max-h-56 w-full max-w-xs object-contain lg:max-h-64'
                 />

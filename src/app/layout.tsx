@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 
 import { ThemeProvider } from '@/components/theme-provider'
 import { TooltipProvider } from '@/components/ui/tooltip'
+import { withBasePath } from '@/lib/paths'
 
 import { cn } from '@/lib/utils'
 
@@ -22,7 +23,8 @@ const newsreader = Newsreader({
   weight: ['400', '500', '600', '700']
 })
 
-const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
+const appUrl =
+  process.env.NEXT_PUBLIC_APP_URL || 'https://dimitrivalax.github.io/venerque-autrement'
 
 export const metadata: Metadata = {
   title: {
@@ -33,7 +35,16 @@ export const metadata: Metadata = {
     'Liste participative et citoyenne pour un Venerque plus solidaire, respectueux du vivant et démocratique. Programme, valeurs et contact.',
   robots: 'index,follow',
   keywords: ['Venerque', 'Venerque Autrement', 'municipales', 'citoyenneté', 'écologie', 'participation'],
-  metadataBase: new URL(appUrl),
+  // Origin only: absolute icon paths (`/venerque-autrement/...`) resolve correctly.
+  metadataBase: new URL(new URL(appUrl).origin),
+  icons: {
+    icon: [
+      { url: withBasePath('/favicon/favicon.ico'), type: 'image/x-icon' },
+      { url: withBasePath('/favicon/favicon-16x16.png'), sizes: '16x16', type: 'image/png' },
+      { url: withBasePath('/favicon/favicon-32x32.png'), sizes: '32x32', type: 'image/png' }
+    ],
+    apple: [{ url: withBasePath('/favicon/apple-touch-icon.png'), sizes: '180x180', type: 'image/png' }]
+  },
   openGraph: {
     title: 'Venerque Autrement',
     description: 'Collectif citoyen pour un autre Venerque — solidarité, transparence, respect du vivant.',
@@ -43,7 +54,7 @@ export const metadata: Metadata = {
     locale: 'fr_FR',
     images: [
       {
-        url: '/images/logo-venerque-autrement.png',
+        url: withBasePath('/images/logo-venerque-autrement.png'),
         type: 'image/png',
         width: 512,
         height: 512,

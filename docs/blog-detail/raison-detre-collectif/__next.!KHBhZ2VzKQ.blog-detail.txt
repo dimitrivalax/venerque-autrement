@@ -1,4 +1,4 @@
 1:"$Sreact.fragment"
 2:I[96871,["/venerque-autrement/_next/static/chunks/3c53782416237f37.js","/venerque-autrement/_next/static/chunks/081617ba1ddf51c6.js"],"default"]
 3:I[58525,["/venerque-autrement/_next/static/chunks/3c53782416237f37.js","/venerque-autrement/_next/static/chunks/081617ba1ddf51c6.js"],"default"]
-0:{"buildId":"F0WOMvx-NqCOc5PTyrp66","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"AFqzJl9zRlGrKJ-bHcRxT","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}

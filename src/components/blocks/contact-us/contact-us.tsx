@@ -1,6 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card'
 
 import ContactForm from '@/components/blocks/contact-us/contact-form'
+import { withBasePath } from '@/lib/paths'
 
 const ContactUs = () => {
   return (
@@ -33,7 +34,7 @@ const ContactUs = () => {
 
             <div className='bg-muted/35 flex items-center justify-center p-8 sm:p-10'>
               <img
-                src='/images/logo-venerque-autrement.png'
+                src={withBasePath('/images/logo-venerque-autrement.png')}
                 alt='Logo Venerque Autrement'
                 className='max-h-72 w-full max-w-sm object-contain'
               />

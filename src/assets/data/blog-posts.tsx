@@ -1,7 +1,9 @@
 import type { BlogPost } from '@/components/blocks/blog-component/blog-component'
+import { withBasePath } from '@/lib/paths'
 
 const author = 'Collectif Venerque Autrement'
-const avatarUrl = '/images/logo-venerque-autrement.png'
+const logoUrl = withBasePath('/images/logo-venerque-autrement.png')
+const avatarUrl = logoUrl
 
 export const blogPosts: BlogPost[] = [
   {
@@ -10,7 +12,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Bienvenue dans le collectif Venerque Autrement',
     description:
       'Liste participative et citoyenne : nos valeurs, notre méthode et nos principes d’action pour un autre Venerque.',
-    imageUrl: '/images/logo-venerque-autrement.png',
+    imageUrl: logoUrl,
     imageAlt: 'Logo Venerque Autrement',
     date: '15 mars 2026',
     category: 'Valeurs',
@@ -25,7 +27,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Notre programme pour Venerque',
     description:
       'Village apaisé, protégé, solidaire, tourné vers demain, respectueux du vivant, entretenu et dynamique.',
-    imageUrl: '/images/logo-venerque-autrement.png',
+    imageUrl: logoUrl,
     imageAlt: 'Logo Venerque Autrement',
     date: '22 mars 2026',
     category: 'Programme',
@@ -40,7 +42,7 @@ export const blogPosts: BlogPost[] = [
     title: 'La raison d’être du collectif citoyen',
     description:
       'Constats, engagements et valeurs : pour une démocratie locale participative et transparente à Venerque.',
-    imageUrl: '/images/logo-venerque-autrement.png',
+    imageUrl: logoUrl,
     imageAlt: 'Logo Venerque Autrement',
     date: '28 mars 2026',
     category: 'Valeurs',
@@ -55,7 +57,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Une mairie à l’écoute, ouverte et transparente',
     description:
       'Communication, assemblées citoyennes, binômes d’élu·es et transparence des compte-rendus.',
-    imageUrl: '/images/logo-venerque-autrement.png',
+    imageUrl: logoUrl,
     imageAlt: 'Logo Venerque Autrement',
     date: '31 mars 2026',
     category: 'Gouvernance',
