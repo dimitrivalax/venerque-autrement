@@ -23,8 +23,7 @@ const newsreader = Newsreader({
   weight: ['400', '500', '600', '700']
 })
 
-const appUrl =
-  process.env.NEXT_PUBLIC_APP_URL || 'https://dimitrivalax.github.io/venerque-autrement'
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://venerque-autrement.fr'
 
 export const metadata: Metadata = {
   title: {
@@ -35,8 +34,7 @@ export const metadata: Metadata = {
     'Liste participative et citoyenne pour un Venerque plus solidaire, respectueux du vivant et démocratique. Programme, valeurs et contact.',
   robots: 'index,follow',
   keywords: ['Venerque', 'Venerque Autrement', 'municipales', 'citoyenneté', 'écologie', 'participation'],
-  // Origin only: absolute icon paths (`/venerque-autrement/...`) resolve correctly.
-  metadataBase: new URL(new URL(appUrl).origin),
+  metadataBase: new URL(appUrl),
   icons: {
     icon: [
       { url: withBasePath('/favicon/favicon.ico'), type: 'image/x-icon' },

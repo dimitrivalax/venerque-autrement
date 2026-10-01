@@ -2,12 +2,13 @@ import createMDX from '@next/mdx'
 
 import type { NextConfig } from 'next'
 
-const basePath = process.env.BASEPATH || '/venerque-autrement'
+// Custom domain (venerque-autrement.fr) → empty. Project Pages: BASEPATH=/venerque-autrement
+const basePath = process.env.BASEPATH ?? ''
 
 const nextConfig: NextConfig = {
   output: 'export',
   distDir: 'docs',
-  basePath,
+  ...(basePath ? { basePath } : {}),
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath
   },

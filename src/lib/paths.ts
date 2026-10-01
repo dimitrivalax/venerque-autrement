@@ -1,8 +1,8 @@
 /**
- * GitHub Pages project path. Keep in sync with `basePath` in next.config.ts.
- * Use `||` (not `??`) so an empty env string still falls back.
+ * Deployment base path. Keep in sync with `basePath` in next.config.ts.
+ * Empty on the custom domain; set via NEXT_PUBLIC_BASE_PATH / BASEPATH for project Pages.
  */
-export const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '/venerque-autrement'
+export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 
 /**
  * Prefix a site-root asset path with the deployment basePath.
