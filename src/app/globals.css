@@ -1,6 +1,9 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+/* Classes utilitaires utilisées par les composants UI de BlockNote */
+@source '../../node_modules/@blocknote/shadcn';
+
 @custom-variant dark (&:is(.dark *));
 
 /* Palette inspirée du logo : bleu marine, vert lime, turquoise, blanc */
@@ -122,8 +125,8 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --font-sans: var(--font-host-grotesk), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-host-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-source-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-newsreader), ui-serif, Georgia, serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
