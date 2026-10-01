@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>http://localhost:3000</loc>
+</url>
+<url>
+<loc>http://localhost:3000/contact</loc>
+</url>
+<url>
+<loc>http://localhost:3000/blog-detail/bienvenue-venerque-autrement</loc>
+</url>
+<url>
+<loc>http://localhost:3000/blog-detail/notre-programme</loc>
+</url>
+<url>
+<loc>http://localhost:3000/blog-detail/raison-detre-collectif</loc>
+</url>
+<url>
+<loc>http://localhost:3000/blog-detail/mairie-ecoute-transparence</loc>
+</url>
+</urlset>
