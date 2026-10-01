@@ -5,15 +5,12 @@ import type { NextConfig } from 'next'
 const nextConfig: NextConfig = {
   output: 'export',
   distDir: 'docs',
-  basePath: process.env.BASEPATH ?? '',
+  basePath: process.env.BASEPATH ?? '/venerque-autrement',
   images: {
     unoptimized: true
   },
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-  // async redirects() {
-  //   return [{ source: '/contact-us', destination: '/contact', permanent: true }]
-  // }
 }
 
 const withMDX = createMDX({
