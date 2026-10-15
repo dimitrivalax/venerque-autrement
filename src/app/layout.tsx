@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { Newsreader, Source_Sans_3 } from 'next/font/google'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 import type { Metadata } from 'next'
 
 import { ThemeProvider } from '@/components/theme-provider'
@@ -11,14 +11,8 @@ import { cn } from '@/lib/utils'
 
 import './globals.css'
 
-const sourceSans = Source_Sans_3({
-  variable: '--font-source-sans',
-  subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '600', '700']
-})
-
-const newsreader = Newsreader({
-  variable: '--font-newsreader',
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: '--font-plus-jakarta-sans',
   subsets: ['latin', 'latin-ext'],
   weight: ['400', '500', '600', '700']
 })
@@ -71,7 +65,7 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
     <html
       lang='fr'
-      className={cn(sourceSans.variable, newsreader.variable, 'flex min-h-full w-full scroll-smooth')}
+      className={cn(plusJakartaSans.variable, 'flex min-h-full w-full scroll-smooth')}
       suppressHydrationWarning
     >
       <body className='flex min-h-full w-full flex-auto flex-col font-sans antialiased'>
