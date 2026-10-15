@@ -14,7 +14,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 
 import MenuDropdown from '@/components/blocks/menu-dropdown'
 import MenuNavigation from '@/components/blocks/menu-navigation'
-import type { NavigationSection } from '@/components/blocks/menu-navigation'
+import type { NavigationSection } from '@/lib/types/navigation'
 
 import { cn } from '@/lib/utils'
 
@@ -23,8 +23,15 @@ type HeaderProps = {
   className?: string
 }
 
+/**
+ * Sticky site header with scroll-aware styling and active section highlighting.
+ *
+ * @param navigationData - Primary navigation sections
+ * @param className - Optional extra class names for the header element
+ */
 const Header = ({ navigationData, className }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState('')
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,40 +46,24 @@ const Header = ({ navigationData, className }: HeaderProps) => {
     }
   }, [])
 
-  const [activeSection, setActiveSection] = useState('')
-
   useEffect(() => {
     const handleScroll = () => {
       const sections = document.querySelectorAll('section[id]')
       const scrollPosition = window.scrollY + window.innerHeight / 2
 
-      if (sections.length === 0) {
-        if (activeSection !== '') {
-          setActiveSection('')
-        }
-
-        return
-      }
-
-      let foundSection = false
+      let nextSectionId = ''
 
       for (const section of sections) {
         const element = section as HTMLElement
         const { offsetTop, offsetHeight } = element
 
         if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-          if (element.id !== activeSection) {
-            setActiveSection(element.id)
-          }
-
-          foundSection = true
+          nextSectionId = element.id
           break
         }
       }
 
-      if (!foundSection && activeSection !== '') {
-        setActiveSection('')
-      }
+      setActiveSection(previous => (previous === nextSectionId ? previous : nextSectionId))
     }
 
     handleScroll()
@@ -82,7 +73,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [activeSection])
+  }, [])
 
   return (
     <header

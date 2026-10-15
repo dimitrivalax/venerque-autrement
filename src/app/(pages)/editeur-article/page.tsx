@@ -4,13 +4,16 @@ import BlogEditorFormDynamic from '@/components/blog-editor/blog-editor-form-dyn
 
 export const metadata: Metadata = {
   title: 'Éditeur d’article',
-  description: 'Rédiger un article et l’envoyer par e-mail en Markdown.',
+  description: 'Rédiger un article et copier le contenu prêt à publier.',
   robots: {
     index: false,
     follow: false
   }
 }
 
+/**
+ * Internal tooling page for drafting blog posts before publication.
+ */
 export default function EditeurArticlePage() {
   return (
     <section className='py-8 sm:pt-16 sm:pb-24'>
@@ -18,7 +21,7 @@ export default function EditeurArticlePage() {
         <div className='space-y-3'>
           <h1 className='text-foreground text-3xl font-semibold sm:text-4xl'>Écrire un article</h1>
           <p className='text-muted-foreground text-base sm:text-lg'>
-            Rédigez votre billet ci-dessous, puis envoyez-le par e-mail en Markdown pour publication.
+            Rédigez votre billet ci-dessous, puis copiez le contenu Markdown et les métadonnées pour publication.
           </p>
         </div>
 

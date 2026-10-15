@@ -9,12 +9,18 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { blogPosts as allBlogPosts } from '@/assets/data/blog-posts'
+import type { BlogPost } from '@/lib/schemas/blog-post'
 
-interface BlogProps {
-  blogPosts?: typeof allBlogPosts
+type BlogRelatedPostProps = {
+  blogPosts?: BlogPost[]
 }
 
-const Blog = ({ blogPosts = allBlogPosts.slice(0, 3) }: BlogProps) => {
+/**
+ * Related posts grid shown below a blog detail article.
+ *
+ * @param blogPosts - Posts to display; defaults to the first three entries
+ */
+const BlogRelatedPost = ({ blogPosts = allBlogPosts.slice(0, 3) }: BlogRelatedPostProps) => {
   const router = useRouter()
 
   return (
@@ -34,30 +40,27 @@ const Blog = ({ blogPosts = allBlogPosts.slice(0, 3) }: BlogProps) => {
           {blogPosts.map(post => (
             <Card
               key={post.id}
-              className='group bg-card/80 hover:border-primary/20 h-full cursor-pointer overflow-hidden rounded-2xl border border-border/60 shadow-sm transition-all duration-300 hover:shadow-md dark:bg-card/60'
-              onClick={() => router.push(`/blog-detail/${post.slug}`)}
+              className='group bg-card/80 hover:border-primary/20 h-full overflow-hidden rounded-2xl border border-border/60 shadow-sm transition-all duration-300 hover:shadow-md dark:bg-card/60'
             >
               <CardContent className='space-y-3.5 p-5 sm:p-6'>
-                <div className='bg-muted mb-5 flex aspect-[16/10] items-center justify-center overflow-hidden rounded-xl sm:mb-6 sm:h-52 sm:aspect-auto'>
-                  <Link href={`/blog-detail/${post.slug}`}>
-                    <img
-                      src={post.imageUrl}
-                      alt={post.imageAlt}
-                      className='max-h-52 w-auto object-contain transition-transform duration-300 group-hover:scale-105'
-                    />
-                  </Link>
-                </div>
+                <Link
+                  href={`/blog-detail/${post.slug}`}
+                  className='bg-muted mb-5 flex aspect-[16/10] items-center justify-center overflow-hidden rounded-xl sm:mb-6 sm:h-52 sm:aspect-auto'
+                >
+                  <img
+                    src={post.imageUrl}
+                    alt={post.imageAlt}
+                    className='max-h-52 w-auto object-contain transition-transform duration-300 group-hover:scale-105'
+                  />
+                </Link>
                 <div className='flex items-center justify-between gap-1.5'>
                   <div className='text-muted-foreground flex items-center gap-1.5'>
                     <CalendarDaysIcon className='size-5' />
                     <span>{post.date}</span>
                   </div>
                   <Badge
-                    className='bg-primary/10 text-primary border-0 text-sm'
-                    onClick={e => {
-                      e.stopPropagation()
-                      router.push(`/#category-${post.category}`)
-                    }}
+                    className='bg-primary/10 text-primary cursor-pointer border-0 text-sm'
+                    onClick={() => router.push(`/#category-${post.category}`)}
                   >
                     {post.category}
                   </Badge>
@@ -88,4 +91,4 @@ const Blog = ({ blogPosts = allBlogPosts.slice(0, 3) }: BlogProps) => {
   )
 }
 
-export default Blog
+export default BlogRelatedPost

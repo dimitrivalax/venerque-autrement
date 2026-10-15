@@ -1,113 +1,26 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import { CheckIcon, CopyIcon, MailIcon } from 'lucide-react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
+
+import { CheckIcon, CopyIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { withBasePath } from '@/lib/paths'
+import { buildPublishPayload, isHttpUrl } from '@/lib/blog-editor-payload'
+import { blogEditorFormSchema } from '@/lib/schemas/blog-editor'
 
 import BlockNoteEditor, { type BlockNoteEditorHandle } from './blocknote-editor'
 
 const RECIPIENT_EMAIL = 'dimitre@free.fr'
-const DEFAULT_AVATAR_URL = withBasePath('/images/logo-venerque-autrement.png')
 
-function isHttpUrl(value: string) {
-  try {
-    const url = new URL(value)
-    return url.protocol === 'http:' || url.protocol === 'https:'
-  } catch {
-    return false
-  }
-}
-
-function slugify(value: string) {
-  return value
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-}
-
-function formatFrenchDate(date: Date) {
-  return new Intl.DateTimeFormat('fr-FR', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  }).format(date)
-}
-
-function escapeTsString(value: string) {
-  return value.replace(/\\/g, '\\\\').replace(/'/g, "\\'")
-}
-
-function estimateReadTime(body: string) {
-  const words = body.trim().split(/\s+/).filter(Boolean).length
-  return Math.max(1, Math.ceil(words / 200))
-}
-
-function buildPublishPayload({
-  title,
-  description,
-  theme,
-  author,
-  imageUrl,
-  readTime,
-  body
-}: {
-  title: string
-  description: string
-  theme: string
-  author: string
-  imageUrl: string
-  readTime: string
-  body: string
-}) {
-  const slug = slugify(title) || 'nouvel-article'
-  const resolvedReadTime = readTime ? Number(readTime) : estimateReadTime(body)
-  const date = formatFrenchDate(new Date())
-  const imageAlt = `Illustration — ${title}`
-
-  const mdxContent = body.trim()
-
-  const blogPostEntry = `{
-  id: /* prochain id */,
-  slug: '${escapeTsString(slug)}',
-  title: '${escapeTsString(title)}',
-  description:
-    '${escapeTsString(description)}',
-  imageUrl: '${escapeTsString(imageUrl)}',
-  imageAlt: '${escapeTsString(imageAlt)}',
-  date: '${escapeTsString(date)}',
-  category: '${escapeTsString(theme)}',
-  author: '${escapeTsString(author)}',
-  avatarUrl: '${DEFAULT_AVATAR_URL}',
-  readTime: ${resolvedReadTime},
-  featured: false
-}`
-
-  return [
-    `Nouvel article : ${title}`,
-    '',
-    '========== 1. CONTENU MDX ==========',
-    `Créer le fichier : src/content/${slug}.mdx`,
-    'Coller exactement le contenu ci-dessous :',
-    '',
-    mdxContent,
-    '',
-    '========== 2. MÉTADONNÉES blog-posts.tsx ==========',
-    'Coller cet objet dans le tableau blogPosts de src/assets/data/blog-posts.tsx',
-    '(remplacer /* prochain id */ par le prochain id numérique) :',
-    '',
-    blogPostEntry
-  ].join('\n')
-}
-
+/**
+ * Client form that validates article metadata and copies a publish-ready payload.
+ */
 export default function BlogEditorForm() {
   const editorRef = useRef<BlockNoteEditorHandle>(null)
+  const copiedTimeoutRef = useRef<number | null>(null)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [theme, setTheme] = useState('')
@@ -119,77 +32,54 @@ export default function BlogEditorForm() {
 
   const showImagePreview = isHttpUrl(imageUrl)
 
-  function validateAndBuildPayload() {
-    const trimmedTitle = title.trim()
-    const trimmedDescription = description.trim()
-    const trimmedTheme = theme.trim()
-    const trimmedAuthor = author.trim()
-    const trimmedImageUrl = imageUrl.trim()
-    const trimmedReadTime = readTime.trim()
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current !== null) {
+        window.clearTimeout(copiedTimeoutRef.current)
+      }
+    }
+  }, [])
 
-    if (!trimmedTitle) {
-      setError('Le titre est obligatoire.')
-      return null
-    }
-    if (!trimmedDescription) {
-      setError('La description est obligatoire.')
-      return null
-    }
-    if (!trimmedTheme) {
-      setError('Le thème est obligatoire.')
-      return null
-    }
-    if (!trimmedAuthor) {
-      setError('L’auteur est obligatoire.')
-      return null
-    }
-    if (!trimmedImageUrl || !isHttpUrl(trimmedImageUrl)) {
-      setError('L’URL de la photo doit être une adresse http(s) valide.')
-      return null
-    }
-    if (trimmedReadTime && (Number.isNaN(Number(trimmedReadTime)) || Number(trimmedReadTime) <= 0)) {
-      setError('Le temps de lecture doit être un nombre positif (minutes).')
-      return null
-    }
-    if (!editorRef.current || editorRef.current.isEmpty()) {
-      setError('Le corps de l’article est obligatoire.')
-      return null
+  async function handleCopyMarkdown(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const parsed = blogEditorFormSchema.safeParse({
+      title,
+      description,
+      theme,
+      author,
+      imageUrl,
+      readTime: readTime.trim() || undefined,
+      body: editorRef.current?.isEmpty() ? '' : (editorRef.current?.getMarkdown() ?? '')
+    })
+
+    if (!parsed.success) {
+      setError(parsed.error.issues[0]?.message ?? 'Formulaire invalide.')
+
+      return
     }
 
     setError(null)
 
-    return buildPublishPayload({
-      title: trimmedTitle,
-      description: trimmedDescription,
-      theme: trimmedTheme,
-      author: trimmedAuthor,
-      imageUrl: trimmedImageUrl,
-      readTime: trimmedReadTime,
-      body: editorRef.current.getMarkdown()
-    })
-  }
-
-  async function handleCopyMarkdown() {
-    const payload = validateAndBuildPayload()
-    if (!payload) return
-
     try {
-      await navigator.clipboard.writeText(payload)
+      await navigator.clipboard.writeText(buildPublishPayload(parsed.data))
       setIsCopied(true)
-      window.setTimeout(() => setIsCopied(false), 2000)
+
+      if (copiedTimeoutRef.current !== null) {
+        window.clearTimeout(copiedTimeoutRef.current)
+      }
+
+      copiedTimeoutRef.current = window.setTimeout(() => {
+        setIsCopied(false)
+        copiedTimeoutRef.current = null
+      }, 2000)
     } catch {
       setError('Impossible de copier dans le presse-papiers.')
     }
   }
 
   return (
-    <form
-      className='space-y-6'
-      onSubmit={event => {
-        event.preventDefault()
-        handleCopyMarkdown()
-      }}
-    >
+    <form className='space-y-6' onSubmit={handleCopyMarkdown} noValidate>
       <div className='space-y-2'>
         <Label htmlFor='title'>Titre</Label>
         <Input
@@ -279,14 +169,14 @@ export default function BlogEditorForm() {
         <BlockNoteEditor ref={editorRef} />
       </div>
 
-      {error ? <p className='text-destructive text-sm'>{error}</p> : null}
+      {error ? (
+        <p className='text-destructive text-sm' role='alert'>
+          {error}
+        </p>
+      ) : null}
 
       <div className='flex flex-col gap-3 sm:flex-row'>
-        {/* <Button type='submit' size='lg' className='sm:flex-1'>
-          <MailIcon className='size-4' />
-          Envoyer par e-mail
-        </Button> */}
-        <Button type='submit' size='lg' className='sm:flex-1' onClick={handleCopyMarkdown}>
+        <Button type='submit' size='lg' className='sm:flex-1'>
           {isCopied ? <CheckIcon className='size-4' /> : <CopyIcon className='size-4' />}
           {isCopied ? 'Contenu copié' : 'Copier pour publication'}
         </Button>
@@ -294,7 +184,7 @@ export default function BlogEditorForm() {
 
       <p className='text-muted-foreground text-xs'>
         Le message contient deux blocs prêts à coller : le fichier MDX (`src/content/…`) et l’entrée TypeScript pour{' '}
-        `blog-posts.tsx`. Destinataire : {RECIPIENT_EMAIL}.
+        `blog-posts.ts`. Destinataire : {RECIPIENT_EMAIL}.
       </p>
     </form>
   )

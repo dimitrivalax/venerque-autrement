@@ -1,3 +1,5 @@
+import type { ComponentType } from 'react'
+
 import Link from 'next/link'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { notFound } from 'next/navigation'
@@ -91,9 +93,21 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
   const post = blogPosts.find(p => p.slug === slug)
 
-  const { default: Post } = await import(`@/content/${slug}.mdx`)
+  if (!post) {
+    notFound()
+  }
 
-  if (!post || !Post) {
+  let Post: ComponentType | undefined
+
+  try {
+    const mod = await import(`@/content/${slug}.mdx`)
+
+    Post = mod.default
+  } catch {
+    notFound()
+  }
+
+  if (!Post) {
     notFound()
   }
 

@@ -1,4 +1,5 @@
 'use client'
+
 import { ArrowUpRightIcon, CalendarDaysIcon } from 'lucide-react'
 
 import { useRouter } from 'next/navigation'
@@ -8,15 +9,20 @@ import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import type { BlogPost } from '@/components/blocks/blog-component/blog-component'
+import type { BlogPost } from '@/lib/schemas/blog-post'
 
-const HeroSection = ({ blogData }: { blogData: BlogPost[] }) => {
+type HeroSectionProps = {
+  blogData: BlogPost[]
+}
+
+/**
+ * Landing hero with brand message and optional featured posts.
+ *
+ * @param blogData - Full list of blog posts; featured ones are shown below the hero
+ */
+const HeroSection = ({ blogData }: HeroSectionProps) => {
   const featuredPosts = blogData.filter(post => post.featured)
   const router = useRouter()
-
-  const handleCardClick = (post: BlogPost) => {
-    router.push(`/blog-detail/${post.slug}`)
-  }
 
   return (
     <section
@@ -38,11 +44,10 @@ const HeroSection = ({ blogData }: { blogData: BlogPost[] }) => {
             <h1 className='text-foreground text-4xl leading-[1.15] font-semibold tracking-tight text-balance sm:text-5xl lg:text-[3.25rem]'>
               Venerque Autrement
             </h1>
-            <p className='text-muted-foreground mx-auto max-w-xl text-lg leading-relaxed sm:text-xl lg:mx-0 lg:max-w-lg'>Pour une nouvelle démocratie locale et participative, transparente et respectueuse de l’humain et de l’environnement à Venerque</p>
-            {/* <p className='text-muted-foreground mx-auto max-w-xl text-lg leading-relaxed sm:text-xl lg:mx-0 lg:max-w-lg'>
-              Tolérance, solidarité, respect de l’Humain et du Vivant : agissons localement pour recréer du lien et une
-              action communale ouverte à toutes et tous.
-            </p> */}
+            <p className='text-muted-foreground mx-auto max-w-xl text-lg leading-relaxed sm:text-xl lg:mx-0 lg:max-w-lg'>
+              Pour une nouvelle démocratie locale et participative, transparente et respectueuse de l’humain et de
+              l’environnement à Venerque
+            </p>
             <div className='flex flex-col gap-3 pt-1 max-sm:w-full sm:flex-row sm:justify-center lg:justify-start'>
               <Button size='lg' className='text-base max-sm:w-full' asChild>
                 <Link href='/#categories'>Lire nos articles</Link>
@@ -71,21 +76,23 @@ const HeroSection = ({ blogData }: { blogData: BlogPost[] }) => {
         )}
 
         <div className='grid grid-cols-1 gap-6 sm:grid-cols-2'>
-          {featuredPosts.map((item, index) => (
+          {featuredPosts.map(item => (
             <Card
-              key={`${item.author}-${index}`}
-              className='group cursor-pointer overflow-hidden rounded-2xl border border-border/60 bg-card/80 py-0 shadow-sm transition-shadow duration-300 hover:shadow-md dark:bg-card/60'
-              onClick={() => handleCardClick(item)}
+              key={item.id}
+              className='group overflow-hidden rounded-2xl border border-border/60 bg-card/80 py-0 shadow-sm transition-shadow duration-300 hover:shadow-md dark:bg-card/60'
             >
-              <CardContent className='grid grid-cols-1 px-0 xl:grid-cols-2' onClick={() => handleCardClick(item)}>
+              <CardContent className='grid grid-cols-1 px-0 xl:grid-cols-2'>
                 <div className='p-5 sm:p-6'>
-                  <div className='bg-muted flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-xl sm:h-59.5 sm:aspect-auto'>
+                  <Link
+                    href={`/blog-detail/${item.slug}`}
+                    className='bg-muted flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-xl sm:h-59.5 sm:aspect-auto'
+                  >
                     <img
                       src={item.imageUrl}
                       alt={item.imageAlt}
                       className='max-h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105'
                     />
-                  </div>
+                  </Link>
                 </div>
                 <div className='flex flex-col justify-center gap-3 p-5 sm:p-6'>
                   <div className='flex items-center gap-1.5 py-1'>
@@ -93,24 +100,13 @@ const HeroSection = ({ blogData }: { blogData: BlogPost[] }) => {
                       <CalendarDaysIcon className='size-5' />
                       <p>{item.date}</p>
                     </div>
-                    <span
-                      role='button'
-                      tabIndex={0}
+                    <button
+                      type='button'
                       className='bg-primary/10 text-primary inline-flex cursor-pointer rounded-full border border-transparent px-3 py-0.5 text-sm font-medium'
-                      onClick={e => {
-                        e.stopPropagation()
-                        router.push(`/#category-${item.category}`)
-                      }}
-                      onKeyDown={e => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault()
-                          e.stopPropagation()
-                          router.push(`/#category-${item.category}`)
-                        }
-                      }}
+                      onClick={() => router.push(`/#category-${item.category}`)}
                     >
                       {item.category}
-                    </span>
+                    </button>
                   </div>
                   <Link href={`/blog-detail/${item.slug}`}>
                     <h3 className='text-xl font-medium'>{item.title}</h3>
@@ -118,7 +114,7 @@ const HeroSection = ({ blogData }: { blogData: BlogPost[] }) => {
 
                   <p className='text-muted-foreground'>{item.description}</p>
                   <div className='flex w-full items-center justify-between gap-1 py-1'>
-                    <span className='cursor-pointer text-sm font-medium'>{item.author}</span>
+                    <span className='text-sm font-medium'>{item.author}</span>
                     <Button
                       size='icon'
                       className='group-hover:bg-primary! bg-background text-foreground hover:bg-primary! hover:text-primary-foreground group-hover:text-primary-foreground border group-hover:border-transparent hover:border-transparent'
@@ -126,6 +122,7 @@ const HeroSection = ({ blogData }: { blogData: BlogPost[] }) => {
                     >
                       <Link href={`/blog-detail/${item.slug}`}>
                         <ArrowUpRightIcon />
+                        <span className='sr-only'>Lire : {item.title}</span>
                       </Link>
                     </Button>
                   </div>

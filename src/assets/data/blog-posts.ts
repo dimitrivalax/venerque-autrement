@@ -1,10 +1,13 @@
-import type { BlogPost } from '@/components/blocks/blog-component/blog-component'
+import type { BlogPost } from '@/lib/schemas/blog-post'
 import { withBasePath } from '@/lib/paths'
 
 const author = 'Collectif Venerque Autrement'
 const logoUrl = withBasePath('/images/logo-venerque-autrement.png')
 const avatarUrl = logoUrl
 
+/**
+ * Published blog post metadata used across listing and detail pages.
+ */
 export const blogPosts: BlogPost[] = [
   {
     id: 1,
