@@ -1,6 +1,6 @@
 allowBuilds:
-  sharp: set this to true or false
-  unrs-resolver: set this to true or false
+  sharp: true
+  unrs-resolver: true
 minimumReleaseAgeExclude:
   - '@asamuzakjp/dom-selector@10.0.3'
   - jsdom@30.1.3
