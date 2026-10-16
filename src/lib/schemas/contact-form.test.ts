@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest'
 
-import { buildContactMailtoUrl, contactFormSchema } from '@/lib/schemas/contact-form'
+import {
+  CONTACT_MESSAGE_MAX_LENGTH,
+  CONTACT_NAME_MAX_LENGTH,
+  contactFormSchema
+} from '@/lib/schemas/contact-form'
 
 describe('contactFormSchema', () => {
   it('accepts a valid payload', () => {
@@ -8,7 +12,8 @@ describe('contactFormSchema', () => {
       name: 'Alice Martin',
       email: 'alice@exemple.fr',
       phone: '0600000000',
-      message: 'Bonjour'
+      message: 'Bonjour',
+      company: ''
     })
 
     expect(result.success).toBe(true)
@@ -23,21 +28,24 @@ describe('contactFormSchema', () => {
 
     expect(result.success).toBe(false)
   })
-})
 
-describe('buildContactMailtoUrl', () => {
-  it('builds an encoded mailto URL', () => {
-    const url = buildContactMailtoUrl(
-      {
-        name: 'Alice Martin',
-        email: 'alice@exemple.fr',
-        message: 'Bonjour le collectif'
-      },
-      'contact@exemple.fr'
-    )
+  it('rejects a name that exceeds the max length', () => {
+    const result = contactFormSchema.safeParse({
+      name: 'A'.repeat(CONTACT_NAME_MAX_LENGTH + 1),
+      email: 'alice@exemple.fr',
+      message: 'Bonjour'
+    })
 
-    expect(url).toContain('mailto:contact@exemple.fr?')
-    expect(url).toContain(encodeURIComponent('Contact — Alice Martin'))
-    expect(url).toContain(encodeURIComponent('alice@exemple.fr'))
+    expect(result.success).toBe(false)
+  })
+
+  it('rejects a message that exceeds the max length', () => {
+    const result = contactFormSchema.safeParse({
+      name: 'Alice',
+      email: 'alice@exemple.fr',
+      message: 'M'.repeat(CONTACT_MESSAGE_MAX_LENGTH + 1)
+    })
+
+    expect(result.success).toBe(false)
   })
 })

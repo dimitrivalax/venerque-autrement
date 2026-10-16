@@ -1,0 +1,6 @@
+# Supabase local / CLI configuration for Venerque Autrement.
+# See https://supabase.com/docs/guides/cli/config
+
+[functions.send-contact-email]
+# Public contact form: the browser calls this function with the anon key.
+verify_jwt = false

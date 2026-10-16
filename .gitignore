@@ -1,6 +1,15 @@
 node_modules
 dist
 
+# env
+.env
+.env.*
+!.env.example
+!supabase/.env.local.example
+
+# supabase CLI local state
+supabase/.temp/
+
 # vscode
 .vscode
 .history
