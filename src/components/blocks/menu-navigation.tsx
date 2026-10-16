@@ -33,6 +33,7 @@ const MenuNavigation = ({
             // Extract section ID from href (e.g., "/#categories" -> "categories", "/#" -> "home")
             const sectionFromHref =
               navItem.href === "/#" ? "home" : navItem.href.replace("/#", "");
+
             const isActive = sectionFromHref === activeSection;
 
             return (

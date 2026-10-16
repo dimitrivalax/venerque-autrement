@@ -73,9 +73,11 @@ export function estimateReadTime(body: string): number {
  */
 export function buildPublishPayload(values: BlogEditorFormValues): string {
   const slug = slugify(values.title) || "nouvel-article";
+
   const resolvedReadTime = values.readTime
     ? Number(values.readTime)
     : estimateReadTime(values.body);
+
   const date = formatFrenchDate(new Date());
   const imageAlt = `Illustration — ${values.title}`;
   const mdxContent = values.body.trim();

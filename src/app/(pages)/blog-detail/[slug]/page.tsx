@@ -51,11 +51,13 @@ const PostNavigation = ({ currentPost }: { currentPost: BlogPost }) => {
   const sortedPosts = [...getBlogPostsPool(currentPost)].sort(
     (a, b) => a.id - b.id,
   );
+
   const currentIndex = sortedPosts.findIndex(
     (post) => post.id === currentPost.id,
   );
 
   const previousPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
+
   const nextPost =
     currentIndex < sortedPosts.length - 1
       ? sortedPosts[currentIndex + 1]
@@ -129,9 +131,11 @@ export default async function BlogDetailPage({
   }
 
   const poolPosts = getBlogPostsPool(post);
+
   const sameCategoryPosts = poolPosts.filter(
     (p) => p.category === post.category && p.slug !== post.slug,
   );
+
   const otherPosts = poolPosts.filter(
     (p) => p.category !== post.category && p.slug !== post.slug,
   );

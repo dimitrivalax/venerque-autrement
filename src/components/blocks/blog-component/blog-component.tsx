@@ -131,6 +131,7 @@ const Blog = () => {
   const uniqueCategories = [
     ...new Set(sortedPosts.map((post) => post.category)),
   ];
+
   const categories = [ALL_TAB, ...uniqueCategories.sort()];
 
   const normalizedQuery = searchQuery.trim().toLowerCase();
