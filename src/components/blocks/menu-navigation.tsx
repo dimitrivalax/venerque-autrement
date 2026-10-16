@@ -5,30 +5,35 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle
-} from '@/components/ui/navigation-menu'
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
 
-import type { NavigationSection } from '@/lib/types/navigation'
-import { cn } from '@/lib/utils'
+import type { NavigationSection } from "@/lib/types/navigation";
+import { cn } from "@/lib/utils";
 
-export type { NavigationItem, NavigationSection } from '@/lib/types/navigation'
+export type { NavigationItem, NavigationSection } from "@/lib/types/navigation";
 
 type MenuNavigationProps = {
-  navigationData: NavigationSection[]
-  activeSection?: string
-  className?: string
-}
+  navigationData: NavigationSection[];
+  activeSection?: string;
+  className?: string;
+};
 
-const MenuNavigation = ({ navigationData, activeSection, className }: MenuNavigationProps) => {
+const MenuNavigation = ({
+  navigationData,
+  activeSection,
+  className,
+}: MenuNavigationProps) => {
   return (
     <NavigationMenu viewport={false} className={className}>
-      <NavigationMenuList className='flex-wrap justify-start gap-3'>
-        {navigationData.map(navItem => {
+      <NavigationMenuList className="flex-wrap justify-start gap-3">
+        {navigationData.map((navItem) => {
           if (navItem.href) {
             // Root link item
             // Extract section ID from href (e.g., "/#categories" -> "categories", "/#" -> "home")
-            const sectionFromHref = navItem.href === '/#' ? 'home' : navItem.href.replace('/#', '')
-            const isActive = sectionFromHref === activeSection
+            const sectionFromHref =
+              navItem.href === "/#" ? "home" : navItem.href.replace("/#", "");
+            const isActive = sectionFromHref === activeSection;
 
             return (
               <NavigationMenuItem key={navItem.title}>
@@ -36,26 +41,28 @@ const MenuNavigation = ({ navigationData, activeSection, className }: MenuNaviga
                   href={navItem.href}
                   className={cn(
                     navigationMenuTriggerStyle(),
-                    'hover:text-primary dark:hover:bg-accent/50 bg-transparent px-3 py-2 text-sm font-medium tracking-tight!',
-                    isActive ? 'text-primary bg-accent/60 font-semibold' : 'text-muted-foreground'
+                    "hover:text-primary dark:hover:bg-accent/50 bg-transparent px-3 py-2 text-sm font-medium tracking-tight!",
+                    isActive
+                      ? "text-primary bg-accent/60 font-semibold"
+                      : "text-muted-foreground",
                   )}
                 >
                   {navItem.title}
                 </NavigationMenuLink>
               </NavigationMenuItem>
-            )
+            );
           }
 
           // Section with dropdown
           return (
             <NavigationMenuItem key={navItem.title}>
-              <NavigationMenuTrigger className='dark:data-[state=open]:hover:bg-accent/50 text-muted-foreground hover:text-primary dark:hover:bg-accent/50 bg-transparent px-3 py-1.5 text-base [&>svg]:size-4'>
+              <NavigationMenuTrigger className="dark:data-[state=open]:hover:bg-accent/50 text-muted-foreground hover:text-primary dark:hover:bg-accent/50 bg-transparent px-3 py-1.5 text-base [&>svg]:size-4">
                 {navItem.title}
               </NavigationMenuTrigger>
-              <NavigationMenuContent className='data-[motion=from-start]:slide-in-from-left-30! data-[motion=to-start]:slide-out-to-left-30! data-[motion=from-end]:slide-in-from-right-30! data-[motion=to-end]:slide-out-to-right-30! absolute w-auto'>
-                <ul className='grid w-38 gap-4'>
+              <NavigationMenuContent className="data-[motion=from-start]:slide-in-from-left-30! data-[motion=to-start]:slide-out-to-left-30! data-[motion=from-end]:slide-in-from-right-30! data-[motion=to-end]:slide-out-to-right-30! absolute w-auto">
+                <ul className="grid w-38 gap-4">
                   <li>
-                    {navItem.items?.map(item => (
+                    {navItem.items?.map((item) => (
                       <NavigationMenuLink key={item.title} href={item.href}>
                         {item.title}
                       </NavigationMenuLink>
@@ -64,11 +71,11 @@ const MenuNavigation = ({ navigationData, activeSection, className }: MenuNaviga
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-          )
+          );
         })}
       </NavigationMenuList>
     </NavigationMenu>
-  )
-}
+  );
+};
 
-export default MenuNavigation
+export default MenuNavigation;

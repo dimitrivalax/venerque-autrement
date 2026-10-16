@@ -1,68 +1,86 @@
-'use client'
+"use client";
 
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import { ChevronRightIcon, CircleSmallIcon } from 'lucide-react'
+import { ChevronRightIcon, CircleSmallIcon } from "lucide-react";
 
-import Link from 'next/link'
+import Link from "next/link";
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-import type { NavigationSection } from '@/lib/types/navigation'
-import { cn } from '@/lib/utils'
+import type { NavigationSection } from "@/lib/types/navigation";
+import { cn } from "@/lib/utils";
 
-export type { NavigationItem, NavigationSection } from '@/lib/types/navigation'
+export type { NavigationItem, NavigationSection } from "@/lib/types/navigation";
 
 type Props = {
-  trigger: ReactNode
-  navigationData: NavigationSection[]
-  activeSection?: string
-  align?: 'center' | 'end' | 'start'
-}
+  trigger: ReactNode;
+  navigationData: NavigationSection[];
+  activeSection?: string;
+  align?: "center" | "end" | "start";
+};
 
-const MenuDropdown = ({ trigger, navigationData, activeSection, align = 'start' }: Props) => {
+const MenuDropdown = ({
+  trigger,
+  navigationData,
+  activeSection,
+  align = "start",
+}: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
       <DropdownMenuContent
-        className='mx-3 w-[min(93vw,500px)] sm:ml-8 md:w-[min(93vw,250px)] max-lg:md:mr-0'
+        className="mx-3 w-[min(93vw,500px)] sm:ml-8 md:w-[min(93vw,250px)] max-lg:md:mr-0"
         align={align}
       >
-        {navigationData.map(navItem => {
+        {navigationData.map((navItem) => {
           if (navItem.href) {
             // Extract section ID from href (e.g., "/#categories" -> "categories", "/#" -> "home")
-            const sectionFromHref = navItem.href === '/#' ? 'home' : navItem.href.replace('/#', '')
-            const isActive = sectionFromHref === activeSection
+            const sectionFromHref =
+              navItem.href === "/#" ? "home" : navItem.href.replace("/#", "");
+            const isActive = sectionFromHref === activeSection;
 
             return (
               <DropdownMenuItem key={navItem.title} asChild>
-                <Link href={navItem.href} className={cn(isActive && 'bg-accent text-accent-foreground font-medium')}>
+                <Link
+                  href={navItem.href}
+                  className={cn(
+                    isActive && "bg-accent text-accent-foreground font-medium",
+                  )}
+                >
                   {navItem.icon}
                   {navItem.title}
                 </Link>
               </DropdownMenuItem>
-            )
+            );
           }
 
           return (
             <Collapsible key={navItem.title} asChild>
               <DropdownMenuGroup>
                 <CollapsibleTrigger asChild>
-                  <DropdownMenuItem onSelect={event => event.preventDefault()} className='justify-between'>
+                  <DropdownMenuItem
+                    onSelect={(event) => event.preventDefault()}
+                    className="justify-between"
+                  >
                     {navItem.icon}
-                    <span className='flex-1'>{navItem.title}</span>
-                    <ChevronRightIcon className='shrink-0 transition-transform [[data-state=open]>&]:rotate-90' />
+                    <span className="flex-1">{navItem.title}</span>
+                    <ChevronRightIcon className="shrink-0 transition-transform [[data-state=open]>&]:rotate-90" />
                   </DropdownMenuItem>
                 </CollapsibleTrigger>
-                <CollapsibleContent className='pl-2'>
-                  {navItem.items?.map(item => (
+                <CollapsibleContent className="pl-2">
+                  {navItem.items?.map((item) => (
                     <DropdownMenuItem key={item.title} asChild>
                       <Link href={item.href}>
                         <CircleSmallIcon />
@@ -73,11 +91,11 @@ const MenuDropdown = ({ trigger, navigationData, activeSection, align = 'start' 
                 </CollapsibleContent>
               </DropdownMenuGroup>
             </Collapsible>
-          )
+          );
         })}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
-}
+  );
+};
 
-export default MenuDropdown
+export default MenuDropdown;

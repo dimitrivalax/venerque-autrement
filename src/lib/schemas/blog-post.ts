@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod";
 
 /**
  * Schema for a published blog post metadata entry.
@@ -15,10 +15,10 @@ export const blogPostSchema = z.object({
   author: z.string().min(1),
   avatarUrl: z.string().min(1),
   readTime: z.number().int().positive(),
-  featured: z.boolean()
-})
+  featured: z.boolean(),
+});
 
 /**
  * Inferred type for a blog post metadata entry.
  */
-export type BlogPost = z.infer<typeof blogPostSchema>
+export type BlogPost = z.infer<typeof blogPostSchema>;

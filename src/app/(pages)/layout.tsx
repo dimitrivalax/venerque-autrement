@@ -1,35 +1,39 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import Header from '@/components/layout/header'
-import Footer from '@/components/layout/footer'
+import Header from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
 
-import type { NavigationSection } from '@/components/blocks/menu-navigation'
+import type { NavigationSection } from "@/components/blocks/menu-navigation";
 
 const navigationData: NavigationSection[] = [
   {
-    title: 'Accueil',
-    href: '/#home'
+    title: "Accueil",
+    href: "/#home",
   },
   {
-    title: 'Articles',
-    href: '/#categories'
+    title: "Articles",
+    href: "/#categories",
   },
   {
-    title: 'Contact',
-    href: '/contact'
-  }
-]
+    title: "Le coin des élu.e.s",
+    href: "/le-coin-des-elus",
+  },
+  {
+    title: "Contact",
+    href: "/contact",
+  },
+];
 
 const PagesLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
-    <div className='flex h-full w-full min-w-0 flex-col'>
+    <div className="flex h-full w-full min-w-0 flex-col">
       <Header navigationData={navigationData} />
 
-      <main className='flex flex-col'>{children}</main>
+      <main className="flex flex-col">{children}</main>
 
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default PagesLayout
+export default PagesLayout;

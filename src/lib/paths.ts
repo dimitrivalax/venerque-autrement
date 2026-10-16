@@ -2,7 +2,7 @@
  * Deployment base path. Keep in sync with `basePath` in next.config.ts.
  * Empty on the custom domain; set via NEXT_PUBLIC_BASE_PATH / BASEPATH for project Pages.
  */
-export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
+export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 /**
  * Prefix a site-root asset path with the deployment basePath.
@@ -12,19 +12,21 @@ export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 export function withBasePath(path: string): string {
   if (
     !path ||
-    path.startsWith('http://') ||
-    path.startsWith('https://') ||
-    path.startsWith('data:') ||
-    path.startsWith('blob:')
+    path.startsWith("http://") ||
+    path.startsWith("https://") ||
+    path.startsWith("data:") ||
+    path.startsWith("blob:")
   ) {
-    return path
+    return path;
   }
 
-  const normalized = path.startsWith('/') ? path : `/${path}`
-  if (!basePath) return normalized
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+
+  if (!basePath) return normalized;
+
   if (normalized === basePath || normalized.startsWith(`${basePath}/`)) {
-    return normalized
+    return normalized;
   }
 
-  return `${basePath}${normalized}`
+  return `${basePath}${normalized}`;
 }
