@@ -1,15 +1,14 @@
+import { ELUS_CATEGORY } from "@/lib/blog-categories";
 import type { BlogPost } from "@/lib/schemas/blog-post";
 import { withBasePath } from "@/lib/paths";
+
+export { ELUS_CATEGORY };
 
 const author = "Collectif Venerque Autrement";
 const logoUrl = withBasePath("/images/logo-venerque-autrement.png");
 const avatarUrl = logoUrl;
 
-/**
- * Category reserved for articles published by elected officials.
- * These posts appear only on `/le-coin-des-elus`, not on the homepage listing.
- */
-export const ELUS_CATEGORY = "élu.e.s";
+const DEMOCRATIC_LIFE_CATEGORY = "Vie démocratique du village" as const;
 
 /**
  * Published blog post metadata used across listing and detail pages.
@@ -24,7 +23,7 @@ export const blogPosts: BlogPost[] = [
     imageUrl: logoUrl,
     imageAlt: "Logo Venerque Autrement",
     date: "15 mars 2026",
-    category: "Valeurs",
+    category: DEMOCRATIC_LIFE_CATEGORY,
     author,
     avatarUrl,
     readTime: 4,
@@ -39,7 +38,7 @@ export const blogPosts: BlogPost[] = [
     imageUrl: logoUrl,
     imageAlt: "Logo Venerque Autrement",
     date: "22 mars 2026",
-    category: "Programme",
+    category: DEMOCRATIC_LIFE_CATEGORY,
     author,
     avatarUrl,
     readTime: 7,
@@ -54,7 +53,7 @@ export const blogPosts: BlogPost[] = [
     imageUrl: logoUrl,
     imageAlt: "Logo Venerque Autrement",
     date: "28 mars 2026",
-    category: "Valeurs",
+    category: DEMOCRATIC_LIFE_CATEGORY,
     author,
     avatarUrl,
     readTime: 8,
@@ -69,7 +68,7 @@ export const blogPosts: BlogPost[] = [
     imageUrl: logoUrl,
     imageAlt: "Logo Venerque Autrement",
     date: "31 mars 2026",
-    category: "Gouvernance",
+    category: DEMOCRATIC_LIFE_CATEGORY,
     author,
     avatarUrl,
     readTime: 5,

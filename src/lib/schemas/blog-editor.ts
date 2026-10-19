@@ -1,13 +1,14 @@
 import { z } from "zod";
 
+import { blogCategorySchema } from "@/lib/blog-categories";
+
 /**
  * Schema for blog editor form fields before payload generation.
  */
 export const blogEditorFormSchema = z.object({
   title: z.string().trim().min(1, "Le titre est obligatoire."),
   description: z.string().trim().min(1, "La description est obligatoire."),
-  theme: z.string().trim().min(1, "Le thème est obligatoire."),
-  author: z.string().trim().min(1, "L’auteur est obligatoire."),
+  theme: blogCategorySchema,
   imageUrl: z
     .string()
     .trim()

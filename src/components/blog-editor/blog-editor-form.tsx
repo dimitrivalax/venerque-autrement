@@ -7,7 +7,15 @@ import { CheckIcon, CopyIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { BLOG_CATEGORIES } from "@/lib/blog-categories";
 import { buildPublishPayload, isHttpUrl } from "@/lib/blog-editor-payload";
 import { blogEditorFormSchema } from "@/lib/schemas/blog-editor";
 
@@ -26,7 +34,6 @@ export default function BlogEditorForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [theme, setTheme] = useState("");
-  const [author, setAuthor] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [readTime, setReadTime] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -49,7 +56,6 @@ export default function BlogEditorForm() {
       title,
       description,
       theme,
-      author,
       imageUrl,
       readTime: readTime.trim() || undefined,
       body: editorRef.current?.isEmpty()
@@ -107,28 +113,20 @@ export default function BlogEditorForm() {
         />
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label htmlFor="theme">Thème</Label>
-          <Input
-            id="theme"
-            value={theme}
-            onChange={(event) => setTheme(event.target.value)}
-            placeholder="ex. Valeurs, Programme…"
-            required
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="author">Auteur</Label>
-          <Input
-            id="author"
-            value={author}
-            onChange={(event) => setAuthor(event.target.value)}
-            placeholder="Nom de l’auteur"
-            required
-          />
-        </div>
+      <div className="space-y-2">
+        <Label htmlFor="theme">Thème</Label>
+        <Select value={theme || undefined} onValueChange={setTheme}>
+          <SelectTrigger id="theme" className="w-full">
+            <SelectValue placeholder="Choisir un thème" />
+          </SelectTrigger>
+          <SelectContent position="popper">
+            {BLOG_CATEGORIES.map((category) => (
+              <SelectItem key={category} value={category}>
+                {category}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">

@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { blogPostCategorySchema } from "@/lib/blog-categories";
+
 /**
  * Schema for a published blog post metadata entry.
  */
@@ -11,7 +13,7 @@ export const blogPostSchema = z.object({
   imageUrl: z.string().min(1),
   imageAlt: z.string().min(1),
   date: z.string().min(1),
-  category: z.string().min(1),
+  category: blogPostCategorySchema,
   author: z.string().min(1),
   avatarUrl: z.string().min(1),
   readTime: z.number().int().positive(),

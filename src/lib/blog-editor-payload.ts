@@ -4,6 +4,11 @@ import type { BlogEditorFormValues } from "@/lib/schemas/blog-editor";
 const DEFAULT_AVATAR_URL = withBasePath("/images/logo-venerque-autrement.png");
 
 /**
+ * Fixed author for articles drafted via the editor.
+ */
+export const DEFAULT_BLOG_AUTHOR = "Collectif Venerque Autrement";
+
+/**
  * Returns whether a string is an http(s) URL.
  *
  * @param value - Candidate URL string
@@ -92,7 +97,7 @@ export function buildPublishPayload(values: BlogEditorFormValues): string {
   imageAlt: '${escapeTsString(imageAlt)}',
   date: '${escapeTsString(date)}',
   category: '${escapeTsString(values.theme)}',
-  author: '${escapeTsString(values.author)}',
+  author: '${escapeTsString(DEFAULT_BLOG_AUTHOR)}',
   avatarUrl: '${DEFAULT_AVATAR_URL}',
   readTime: ${resolvedReadTime},
   featured: false

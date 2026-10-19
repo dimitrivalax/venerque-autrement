@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   buildPublishPayload,
+  DEFAULT_BLOG_AUTHOR,
   estimateReadTime,
   slugify,
 } from "@/lib/blog-editor-payload";
@@ -26,8 +27,7 @@ describe("blogEditorFormSchema + buildPublishPayload", () => {
     const parsed = blogEditorFormSchema.parse({
       title: "Titre test",
       description: "Description test",
-      theme: "Valeurs",
-      author: "Collectif",
+      theme: "Vie démocratique du village",
       imageUrl: "https://exemple.fr/image.png",
       body: "## Intro\n\nContenu de test.",
     });
@@ -36,6 +36,7 @@ describe("blogEditorFormSchema + buildPublishPayload", () => {
 
     expect(payload).toContain("src/content/titre-test.mdx");
     expect(payload).toContain("slug: 'titre-test'");
+    expect(payload).toContain(`author: '${DEFAULT_BLOG_AUTHOR}'`);
     expect(payload).toContain("## Intro");
   });
 
@@ -43,9 +44,20 @@ describe("blogEditorFormSchema + buildPublishPayload", () => {
     const result = blogEditorFormSchema.safeParse({
       title: "Titre",
       description: "Description",
-      theme: "Valeurs",
-      author: "Collectif",
+      theme: "Vie démocratique du village",
       imageUrl: "ftp://exemple.fr/image.png",
+      body: "Contenu",
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it("rejects a free-form theme outside the fixed list", () => {
+    const result = blogEditorFormSchema.safeParse({
+      title: "Titre",
+      description: "Description",
+      theme: "Valeurs",
+      imageUrl: "https://exemple.fr/image.png",
       body: "Contenu",
     });
 
