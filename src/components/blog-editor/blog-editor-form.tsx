@@ -166,7 +166,7 @@ export default function BlogEditorForm() {
         </div>
       ) : null}
 
-      <div className="space-y-2">
+      <div className="relative left-1/2 w-[80vw] max-w-[80vw] -translate-x-1/2 space-y-2">
         <Label>Corps de l’article</Label>
         <BlockNoteEditor ref={editorRef} />
       </div>

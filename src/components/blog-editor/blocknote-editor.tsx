@@ -101,11 +101,11 @@ const BlockNoteEditor = forwardRef<BlockNoteEditorHandle>(
     }));
 
     return (
-      <div className="border-input bg-background min-h-64 overflow-hidden rounded-md border">
+      <div className="border-input bg-background min-h-[48rem] overflow-hidden rounded-md border">
         <BlockNoteView
           editor={editor}
           theme="light"
-          className="min-h-64"
+          className="min-h-[48rem]"
           formattingToolbar={false}
           sideMenu={false}
         >
