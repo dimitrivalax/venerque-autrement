@@ -17,6 +17,7 @@ const eslintConfig = defineConfig([
     'out/**',
     'build/**',
     'docs/**',
+    '.history/**',
     'next-env.d.ts',
     'eslint.config.mjs',
     '**/*.css',
