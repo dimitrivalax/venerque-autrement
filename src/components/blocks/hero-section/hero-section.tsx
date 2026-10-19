@@ -1,5 +1,7 @@
 "use client";
 
+import type { MouseEvent } from "react";
+
 import { ArrowUpRightIcon, CalendarDaysIcon } from "lucide-react";
 
 import { useRouter } from "next/navigation";
@@ -13,6 +15,33 @@ import type { BlogPost } from "@/lib/schemas/blog-post";
 
 type HeroSectionProps = {
   blogData: BlogPost[];
+};
+
+const CATEGORIES_SECTION_ID = "categories";
+
+/**
+ * Scrolls to `#categories` when already on the home page.
+ * Needed because the browser ignores hash links that match the current URL.
+ *
+ * @param event - Click event from the categories CTA link
+ */
+const handleCategoriesClick = (event: MouseEvent<HTMLAnchorElement>) => {
+  if (window.location.pathname !== "/") {
+    return;
+  }
+
+  const section = document.getElementById(CATEGORIES_SECTION_ID);
+
+  if (!section) {
+    return;
+  }
+
+  event.preventDefault();
+  section.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  if (window.location.hash !== `#${CATEGORIES_SECTION_ID}`) {
+    window.history.pushState(null, "", `/#${CATEGORIES_SECTION_ID}`);
+  }
 };
 
 /**
@@ -52,7 +81,9 @@ const HeroSection = ({ blogData }: HeroSectionProps) => {
             </p>
             <div className="flex flex-col gap-3 pt-1 max-sm:w-full sm:flex-row sm:justify-center lg:justify-start">
               <Button size="lg" className="text-base max-sm:w-full" asChild>
-                <Link href="/#categories">Lire nos articles</Link>
+                <Link href="/#categories" onClick={handleCategoriesClick}>
+                  Lire nos articles
+                </Link>
               </Button>
               <Button
                 size="lg"
