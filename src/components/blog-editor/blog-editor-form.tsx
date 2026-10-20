@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
-
 import { CheckIcon, CopyIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -16,12 +14,9 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { BLOG_CATEGORIES } from "@/lib/blog-categories";
-import { buildPublishPayload, isHttpUrl } from "@/lib/blog-editor-payload";
-import { blogEditorFormSchema } from "@/lib/schemas/blog-editor";
 
-import BlockNoteEditor, {
-  type BlockNoteEditorHandle,
-} from "./blocknote-editor";
+import BlockNoteEditor from "./blocknote-editor";
+import { useBlogEditorForm } from "./use-blog-editor-form";
 
 const RECIPIENT_EMAIL = "dimitre@free.fr";
 
@@ -29,67 +24,22 @@ const RECIPIENT_EMAIL = "dimitre@free.fr";
  * Client form that validates article metadata and copies a publish-ready payload.
  */
 export default function BlogEditorForm() {
-  const editorRef = useRef<BlockNoteEditorHandle>(null);
-  const copiedTimeoutRef = useRef<number | null>(null);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [theme, setTheme] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [readTime, setReadTime] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [isCopied, setIsCopied] = useState(false);
-
-  const showImagePreview = isHttpUrl(imageUrl);
-
-  useEffect(() => {
-    return () => {
-      if (copiedTimeoutRef.current !== null) {
-        window.clearTimeout(copiedTimeoutRef.current);
-      }
-    };
-  }, []);
-
-  async function handleCopyMarkdown(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const parsed = blogEditorFormSchema.safeParse({
-      title,
-      description,
-      theme,
-      imageUrl,
-      readTime: readTime.trim() || undefined,
-      body: editorRef.current?.isEmpty()
-        ? ""
-        : (editorRef.current?.getMarkdown() ?? ""),
-    });
-
-    if (!parsed.success) {
-      setError(parsed.error.issues[0]?.message ?? "Formulaire invalide.");
-
-      return;
-    }
-
-    setError(null);
-
-    try {
-      await navigator.clipboard.writeText(buildPublishPayload(parsed.data));
-      setIsCopied(true);
-
-      if (copiedTimeoutRef.current !== null) {
-        window.clearTimeout(copiedTimeoutRef.current);
-      }
-
-      copiedTimeoutRef.current = window.setTimeout(() => {
-        setIsCopied(false);
-        copiedTimeoutRef.current = null;
-      }, 2000);
-    } catch {
-      setError("Impossible de copier dans le presse-papiers.");
-    }
-  }
+  const {
+    editorRef,
+    fields: { title, description, theme, imageUrl, readTime },
+    setTitle,
+    setDescription,
+    setTheme,
+    setImageUrl,
+    setReadTime,
+    error,
+    isCopied,
+    showImagePreview,
+    handleSubmit,
+  } = useBlogEditorForm();
 
   return (
-    <form className="space-y-6" onSubmit={handleCopyMarkdown} noValidate>
+    <form className="space-y-6" onSubmit={handleSubmit} noValidate>
       <div className="space-y-2">
         <Label htmlFor="title">Titre</Label>
         <Input
