@@ -7,7 +7,6 @@ const basePath = process.env.BASEPATH ?? ''
 
 const nextConfig: NextConfig = {
   output: 'export',
-  distDir: 'docs',
   ...(basePath ? { basePath } : {}),
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath

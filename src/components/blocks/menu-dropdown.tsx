@@ -77,7 +77,7 @@ const MenuDropdown = ({
                   >
                     {navItem.icon}
                     <span className="flex-1">{navItem.title}</span>
-                    <ChevronRightIcon className="shrink-0 transition-transform [[data-state=open]>&]:rotate-90" />
+                    <ChevronRightIcon className="shrink-0 transition-transform in-data-[state=open]:rotate-90" />
                   </DropdownMenuItem>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="pl-2">

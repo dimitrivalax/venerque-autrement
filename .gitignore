@@ -1,5 +1,6 @@
 node_modules
 dist
+out
 
 # env
 .env
@@ -16,6 +17,3 @@ supabase/.temp/
 
 # next
 .next
-
-# docs
-docs/

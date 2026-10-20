@@ -7,6 +7,9 @@
 <loc>http://localhost:3000/contact</loc>
 </url>
 <url>
+<loc>http://localhost:3000/le-coin-des-elus</loc>
+</url>
+<url>
 <loc>http://localhost:3000/blog-detail/bienvenue-venerque-autrement</loc>
 </url>
 <url>
@@ -17,5 +20,11 @@
 </url>
 <url>
 <loc>http://localhost:3000/blog-detail/mairie-ecoute-transparence</loc>
+</url>
+<url>
+<loc>http://localhost:3000/blog-detail/coin-des-elus-exemple</loc>
+</url>
+<url>
+<loc>http://localhost:3000/blog-detail/elus-conseil-municipal</loc>
 </url>
 </urlset>
