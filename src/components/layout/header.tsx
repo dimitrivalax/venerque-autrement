@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import Image from "next/image";
 import Link from "next/link";
 
 import { MailIcon, MenuIcon } from "lucide-react";
 
 import { ModeToggle } from "@/components/layout/mode-toggle";
+import { useHeaderScroll } from "@/components/layout/use-header-scroll";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -34,55 +33,7 @@ type HeaderProps = {
  * @param className - Optional extra class names for the header element
  */
 const Header = ({ navigationData, className }: HeaderProps) => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll("section[id]");
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
-
-      let nextSectionId = "";
-
-      for (const section of sections) {
-        const element = section as HTMLElement;
-        const { offsetTop, offsetHeight } = element;
-
-        if (
-          scrollPosition >= offsetTop &&
-          scrollPosition < offsetTop + offsetHeight
-        ) {
-          nextSectionId = element.id;
-          break;
-        }
-      }
-
-      setActiveSection((previous) =>
-        previous === nextSectionId ? previous : nextSectionId,
-      );
-    };
-
-    handleScroll();
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const { isScrolled, activeSection } = useHeaderScroll();
 
   return (
     <header

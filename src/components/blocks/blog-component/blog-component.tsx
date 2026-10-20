@@ -26,6 +26,8 @@ import {
 import { getMainBlogPosts } from "@/lib/blog-posts";
 import type { BlogPost } from "@/lib/schemas/blog-post";
 
+import { useBlogSearch } from "./use-blog-search";
+
 export type { BlogPost };
 
 const ALL_TAB = "Tous";
@@ -123,31 +125,20 @@ export const BlogGrid = ({
  */
 const Blog = () => {
   const [selectedTab, setSelectedTab] = useState(ALL_TAB);
-  const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
 
   const sortedPosts = [...getMainBlogPosts()].sort((a, b) => b.id - a.id);
+
+  const { searchQuery, setSearchQuery, filteredPosts } = useBlogSearch(
+    sortedPosts,
+    { includeCategory: true },
+  );
 
   const uniqueCategories = [
     ...new Set(sortedPosts.map((post) => post.category)),
   ];
 
   const categories = [ALL_TAB, ...uniqueCategories.sort()];
-
-  const normalizedQuery = searchQuery.trim().toLowerCase();
-
-  const matchesSearch = (post: BlogPost) => {
-    if (!normalizedQuery) return true;
-
-    return (
-      post.title.toLowerCase().includes(normalizedQuery) ||
-      post.description.toLowerCase().includes(normalizedQuery) ||
-      post.category.toLowerCase().includes(normalizedQuery) ||
-      post.author.toLowerCase().includes(normalizedQuery)
-    );
-  };
-
-  const filteredPosts = sortedPosts.filter(matchesSearch);
 
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);

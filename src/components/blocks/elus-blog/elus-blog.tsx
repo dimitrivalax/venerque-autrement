@@ -1,34 +1,20 @@
 "use client";
 
-import { useState } from "react";
-
 import { SearchIcon } from "lucide-react";
 
 import { BlogGrid } from "@/components/blocks/blog-component/blog-component";
+import { useBlogSearch } from "@/components/blocks/blog-component/use-blog-search";
 import { Input } from "@/components/ui/input";
 import { getElusBlogPosts } from "@/lib/blog-posts";
-import type { BlogPost } from "@/lib/schemas/blog-post";
 
 /**
  * Listing section for « Le coin des élu.e.s » with client-side search.
  */
 const ElusBlog = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-
   const sortedPosts = [...getElusBlogPosts()].sort((a, b) => b.id - a.id);
-  const normalizedQuery = searchQuery.trim().toLowerCase();
 
-  const matchesSearch = (post: BlogPost) => {
-    if (!normalizedQuery) return true;
-
-    return (
-      post.title.toLowerCase().includes(normalizedQuery) ||
-      post.description.toLowerCase().includes(normalizedQuery) ||
-      post.author.toLowerCase().includes(normalizedQuery)
-    );
-  };
-
-  const filteredPosts = sortedPosts.filter(matchesSearch);
+  const { searchQuery, setSearchQuery, filteredPosts } =
+    useBlogSearch(sortedPosts);
 
   return (
     <section className="py-12 sm:py-20 lg:py-28">

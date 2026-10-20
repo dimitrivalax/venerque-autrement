@@ -1,7 +1,5 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-
 import { UserIcon, MailIcon, PhoneIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -13,58 +11,15 @@ import {
   CONTACT_MESSAGE_MAX_LENGTH,
   CONTACT_NAME_MAX_LENGTH,
   CONTACT_PHONE_MAX_LENGTH,
-  contactFormSchema,
 } from "@/lib/schemas/contact-form";
-import { submitContactForm } from "@/lib/submit-contact-form";
+
+import { useContactForm } from "./use-contact-form";
 
 /**
  * Public contact form with Zod validation and Supabase Edge Function submission.
  */
 const ContactForm = () => {
-  const [error, setError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-
-    const parsed = contactFormSchema.safeParse({
-      name: formData.get("name"),
-      email: formData.get("email"),
-      phone: formData.get("phone") || undefined,
-      message: formData.get("message"),
-      company: formData.get("company") || "",
-    });
-
-    if (!parsed.success) {
-      setIsSuccess(false);
-      setError(parsed.error.issues[0]?.message ?? "Formulaire invalide.");
-
-      return;
-    }
-
-    setError(null);
-    setIsSuccess(false);
-    setIsSubmitting(true);
-
-    try {
-      const result = await submitContactForm(parsed.data);
-
-      if (!result.ok) {
-        setError(result.error);
-
-        return;
-      }
-
-      setIsSuccess(true);
-      form.reset();
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const { error, isSubmitting, isSuccess, handleSubmit } = useContactForm();
 
   return (
     <form className="relative space-y-6" onSubmit={handleSubmit} noValidate>
