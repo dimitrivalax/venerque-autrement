@@ -18,7 +18,7 @@ export const blogPostSchema = z.object({
   avatarUrl: z.string().min(1),
   readTime: z.number().int().positive(),
   featured: z.boolean(),
-  pdfUrl: z.string().min(1).optional(),
+  pdfUrls: z.array(z.string().min(1)).min(1).optional(),
 });
 
 /**

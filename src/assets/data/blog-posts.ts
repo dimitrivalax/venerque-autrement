@@ -104,6 +104,9 @@ export const blogPosts: BlogPost[] = [
     avatarUrl,
     readTime: 5,
     featured: false,
-    pdfUrl: withBasePath("/pdf/VA-Bulletin_2026_A4_1410.pdf"),
+    pdfUrls: [
+      withBasePath("/pdf/VA-Bulletin_2026_A4_1410.pdf"),
+      withBasePath("/pdf/VotesElusVA.pdf"),
+    ],
   },
 ];

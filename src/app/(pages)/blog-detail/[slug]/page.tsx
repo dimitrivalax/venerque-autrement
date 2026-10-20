@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 
 import CTA from "@/components/blocks/cta-section/cta-section";
 import Blog from "@/components/blocks/blog-related-post/blog-related-post";
+import { ImageLightbox } from "@/components/blocks/image-lightbox/image-lightbox";
 import { PdfViewer } from "@/components/blocks/pdf-viewer/pdf-viewer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -224,20 +225,14 @@ export default async function BlogDetailPage({
                 </div>
               </div>
 
-              <div className="bg-muted flex justify-center rounded-[8px] p-8">
-                <img
-                  src={post.imageUrl}
-                  alt={post.imageAlt}
-                  className="max-h-72 w-full max-w-md object-contain"
-                />
-              </div>
+              <ImageLightbox src={post.imageUrl} alt={post.imageAlt} />
 
               <article id="content" className="space-y-12">
                 <Post />
               </article>
 
-              {post.pdfUrl ? (
-                <PdfViewer src={post.pdfUrl} title={post.title} />
+              {post.pdfUrls ? (
+                <PdfViewer urls={post.pdfUrls} title={post.title} />
               ) : null}
 
               <PostNavigation currentPost={post} />
