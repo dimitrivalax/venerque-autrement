@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 
 import CTA from "@/components/blocks/cta-section/cta-section";
 import Blog from "@/components/blocks/blog-related-post/blog-related-post";
+import { PdfViewer } from "@/components/blocks/pdf-viewer/pdf-viewer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
@@ -234,6 +235,10 @@ export default async function BlogDetailPage({
               <article id="content" className="space-y-12">
                 <Post />
               </article>
+
+              {post.pdfUrl ? (
+                <PdfViewer src={post.pdfUrl} title={post.title} />
+              ) : null}
 
               <PostNavigation currentPost={post} />
             </div>

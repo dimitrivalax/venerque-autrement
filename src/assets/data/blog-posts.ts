@@ -89,4 +89,21 @@ export const blogPosts: BlogPost[] = [
     readTime: 3,
     featured: false,
   },
+  {
+    id: 6,
+    slug: "elus-conseil-municipal",
+    title: "Les élu·es Venerque Autrement au conseil municipal",
+    description:
+      "Commissions, répartition des votes, permanences et engagements de nos élu·es au conseil municipal.",
+    imageUrl: withBasePath("/images/nos-conseillers-municipaux.jpeg"),
+    imageAlt:
+      "Les conseiller·ère·s municipaux Venerque Autrement devant la mairie",
+    date: "14 octobre 2026",
+    category: ELUS_CATEGORY,
+    author: "Élu·e Venerque Autrement",
+    avatarUrl,
+    readTime: 5,
+    featured: false,
+    pdfUrl: withBasePath("/pdf/VA-Bulletin_2026_A4_1410.pdf"),
+  },
 ];
