@@ -1,0 +1,26 @@
+---
+description: Run the full local CI pipeline after every code generation and fix until all steps pass
+alwaysApply: true
+---
+
+# CI After Code Generation
+
+After any substantive code change (new files, edits, refactors), run the same validation steps as `.github/workflows/ci.yml` before considering the task done.
+
+Execute in this order:
+
+1. `pnpm lint`
+2. `pnpm format:check` — if it fails, run `pnpm format`, then re-check
+3. `pnpm check-types`
+4. `pnpm test`
+5. `pnpm build`
+
+For each failing step:
+
+- Fix every reported error (and warning when easy).
+- Re-run the failed command until it exits with code 0.
+- If `--fix` can safely resolve a lint issue, use it, then re-check.
+
+Do not skip these steps for "small" edits. Do not report completion while any step fails.
+
+Note: `pnpm build` rewrites the `docs/` directory (Next.js static export). Do not commit those artifacts unless the user explicitly asks.
