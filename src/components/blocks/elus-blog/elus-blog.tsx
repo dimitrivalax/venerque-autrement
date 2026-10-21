@@ -1,10 +1,8 @@
 "use client";
 
-import { SearchIcon } from "lucide-react";
-
 import { BlogGrid } from "@/components/blocks/blog-component/blog-component";
+import { BlogSearchInput } from "@/components/blocks/blog-component/blog-search-input";
 import { useBlogSearch } from "@/components/blocks/blog-component/use-blog-search";
-import { Input } from "@/components/ui/input";
 import { getElusBlogPosts } from "@/lib/blog-posts";
 
 /**
@@ -30,20 +28,7 @@ const ElusBlog = () => {
           </p>
         </div>
 
-        <div className="relative max-w-md max-md:w-full">
-          <div className="text-muted-foreground pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center pl-3 peer-disabled:opacity-50">
-            <SearchIcon className="size-4" />
-            <span className="sr-only">Rechercher</span>
-          </div>
-          <Input
-            type="search"
-            value={searchQuery}
-            onChange={(event) => setSearchQuery(event.target.value)}
-            placeholder="Rechercher un article…"
-            aria-label="Rechercher un article"
-            className="peer bg-background/80 h-11 rounded-xl border-border/60 px-9 shadow-sm [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none"
-          />
-        </div>
+        <BlogSearchInput value={searchQuery} onChange={setSearchQuery} />
 
         <BlogGrid
           posts={filteredPosts}

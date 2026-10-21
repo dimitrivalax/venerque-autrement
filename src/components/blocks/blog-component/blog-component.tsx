@@ -4,14 +4,13 @@ import { useState } from "react";
 
 import { useRouter } from "next/navigation";
 
-import { SearchIcon, ArrowRightIcon, CalendarDaysIcon } from "lucide-react";
+import { ArrowRightIcon, CalendarDaysIcon } from "lucide-react";
 
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -26,6 +25,7 @@ import {
 import { getMainBlogPosts } from "@/lib/blog-posts";
 import type { BlogPost } from "@/lib/schemas/blog-post";
 
+import { BlogSearchInput } from "./blog-search-input";
 import { useBlogSearch } from "./use-blog-search";
 
 export type { BlogPost };
@@ -186,6 +186,8 @@ const Blog = () => {
           className="gap-8 lg:gap-12"
         >
           <div className="flex flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center">
+            <BlogSearchInput value={searchQuery} onChange={setSearchQuery} />
+
             <ScrollArea className="bg-muted/80 w-full rounded-xl border border-border/50 sm:w-auto">
               <TabsList className="h-auto gap-0.5 bg-transparent p-1">
                 {categories.map((category) => (
@@ -201,21 +203,6 @@ const Blog = () => {
               </TabsList>
               <ScrollBar orientation="horizontal" />
             </ScrollArea>
-
-            <div className="relative max-md:w-full md:min-w-[220px] lg:min-w-[280px]">
-              <div className="text-muted-foreground pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center pl-3 peer-disabled:opacity-50">
-                <SearchIcon className="size-4" />
-                <span className="sr-only">Rechercher</span>
-              </div>
-              <Input
-                type="search"
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Rechercher un article…"
-                aria-label="Rechercher un article"
-                className="peer bg-background/80 h-11 rounded-xl border-border/60 px-9 shadow-sm [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none"
-              />
-            </div>
           </div>
 
           <TabsContent value={ALL_TAB}>
