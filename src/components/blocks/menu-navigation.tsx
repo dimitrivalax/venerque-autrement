@@ -1,3 +1,7 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -9,32 +13,31 @@ import {
 } from "@/components/ui/navigation-menu";
 
 import type { NavigationSection } from "@/lib/types/navigation";
+import { isNavigationHrefActive } from "@/lib/is-navigation-href-active";
 import { cn } from "@/lib/utils";
 
 export type { NavigationItem, NavigationSection } from "@/lib/types/navigation";
 
 type MenuNavigationProps = {
   navigationData: NavigationSection[];
-  activeSection?: string;
   className?: string;
 };
 
-const MenuNavigation = ({
-  navigationData,
-  activeSection,
-  className,
-}: MenuNavigationProps) => {
+/**
+ * Desktop navigation menu with pathname-based active highlighting.
+ *
+ * @param navigationData - Primary navigation sections
+ * @param className - Optional extra class names for the menu root
+ */
+const MenuNavigation = ({ navigationData, className }: MenuNavigationProps) => {
+  const pathname = usePathname();
+
   return (
     <NavigationMenu viewport={false} className={className}>
       <NavigationMenuList className="flex-wrap justify-start gap-3">
         {navigationData.map((navItem) => {
           if (navItem.href) {
-            // Root link item
-            // Extract section ID from href (e.g., "/#categories" -> "categories", "/#" -> "home")
-            const sectionFromHref =
-              navItem.href === "/#" ? "home" : navItem.href.replace("/#", "");
-
-            const isActive = sectionFromHref === activeSection;
+            const isActive = isNavigationHrefActive(navItem.href, pathname);
 
             return (
               <NavigationMenuItem key={navItem.title}>

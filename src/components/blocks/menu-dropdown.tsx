@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { ChevronRightIcon, CircleSmallIcon } from "lucide-react";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import {
   Collapsible,
@@ -20,6 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import type { NavigationSection } from "@/lib/types/navigation";
+import { isNavigationHrefActive } from "@/lib/is-navigation-href-active";
 import { cn } from "@/lib/utils";
 
 export type { NavigationItem, NavigationSection } from "@/lib/types/navigation";
@@ -27,16 +29,19 @@ export type { NavigationItem, NavigationSection } from "@/lib/types/navigation";
 type Props = {
   trigger: ReactNode;
   navigationData: NavigationSection[];
-  activeSection?: string;
   align?: "center" | "end" | "start";
 };
 
-const MenuDropdown = ({
-  trigger,
-  navigationData,
-  activeSection,
-  align = "start",
-}: Props) => {
+/**
+ * Mobile navigation dropdown with pathname-based active highlighting.
+ *
+ * @param trigger - Element that opens the dropdown
+ * @param navigationData - Primary navigation sections
+ * @param align - Dropdown alignment relative to the trigger
+ */
+const MenuDropdown = ({ trigger, navigationData, align = "start" }: Props) => {
+  const pathname = usePathname();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
@@ -46,11 +51,7 @@ const MenuDropdown = ({
       >
         {navigationData.map((navItem) => {
           if (navItem.href) {
-            // Extract section ID from href (e.g., "/#categories" -> "categories", "/#" -> "home")
-            const sectionFromHref =
-              navItem.href === "/#" ? "home" : navItem.href.replace("/#", "");
-
-            const isActive = sectionFromHref === activeSection;
+            const isActive = isNavigationHrefActive(navItem.href, pathname);
 
             return (
               <DropdownMenuItem key={navItem.title} asChild>

@@ -7,15 +7,13 @@ import { useEffect, useState } from "react";
  */
 export type UseHeaderScrollResult = {
   readonly isScrolled: boolean;
-  readonly activeSection: string;
 };
 
 /**
- * Tracks page scroll for sticky header styling and active section highlighting.
+ * Tracks page scroll for sticky header styling.
  */
 export function useHeaderScroll(): UseHeaderScrollResult {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,42 +28,7 @@ export function useHeaderScroll(): UseHeaderScrollResult {
     };
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll("section[id]");
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
-
-      let nextSectionId = "";
-
-      for (const section of sections) {
-        const element = section as HTMLElement;
-        const { offsetTop, offsetHeight } = element;
-
-        if (
-          scrollPosition >= offsetTop &&
-          scrollPosition < offsetTop + offsetHeight
-        ) {
-          nextSectionId = element.id;
-          break;
-        }
-      }
-
-      setActiveSection((previous) =>
-        previous === nextSectionId ? previous : nextSectionId,
-      );
-    };
-
-    handleScroll();
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return {
     isScrolled,
-    activeSection,
   };
 }

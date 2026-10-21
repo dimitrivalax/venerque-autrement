@@ -27,13 +27,13 @@ type HeaderProps = {
 };
 
 /**
- * Sticky site header with scroll-aware styling and active section highlighting.
+ * Sticky site header with scroll-aware styling.
  *
  * @param navigationData - Primary navigation sections
  * @param className - Optional extra class names for the header element
  */
 const Header = ({ navigationData, className }: HeaderProps) => {
-  const { isScrolled, activeSection } = useHeaderScroll();
+  const { isScrolled } = useHeaderScroll();
 
   return (
     <header
@@ -65,7 +65,6 @@ const Header = ({ navigationData, className }: HeaderProps) => {
 
         <MenuNavigation
           navigationData={navigationData}
-          activeSection={activeSection}
           className="max-lg:hidden"
         />
 
@@ -96,7 +95,6 @@ const Header = ({ navigationData, className }: HeaderProps) => {
             <MenuDropdown
               align="end"
               navigationData={navigationData}
-              activeSection={activeSection}
               trigger={
                 <Button variant="outline" size="icon" className="lg:hidden">
                   <MenuIcon />
