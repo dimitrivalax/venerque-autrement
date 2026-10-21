@@ -8,7 +8,6 @@ import type { BlogPost } from "@/lib/schemas/blog-post";
  * Options for {@link useBlogSearch}.
  */
 export type UseBlogSearchOptions = {
-  
   /**
    * When true, also match the post category against the query.
    */

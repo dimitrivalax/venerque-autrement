@@ -46,7 +46,10 @@ const eslintConfig = defineConfig([
           beforeLineComment: true,
           allowBlockStart: true,
           allowObjectStart: true,
-          allowArrayStart: true
+          allowArrayStart: true,
+          allowTypeStart: true,
+          allowInterfaceStart: true,
+          allowEnumStart: true
         }
       ],
       '@stylistic/padding-line-between-statements': [
