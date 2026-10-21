@@ -11,12 +11,12 @@ const navigationData: NavigationSection[] = [
     href: "/#home",
   },
   {
-    title: "Articles",
-    href: "/#categories",
-  },
-  {
     title: "Le coin des élu.e.s",
     href: "/le-coin-des-elus",
+  },
+  {
+    title: "Articles",
+    href: "/articles",
   },
   {
     title: "Contact",

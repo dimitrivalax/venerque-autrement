@@ -143,7 +143,7 @@ export default async function BlogDetailPage({
   );
 
   const relatedPosts = [...sameCategoryPosts, ...otherPosts].slice(0, 3);
-  const listingHref = isElusPost(post) ? "/le-coin-des-elus" : "/#categories";
+  const listingHref = isElusPost(post) ? "/le-coin-des-elus" : "/articles";
   const listingLabel = isElusPost(post) ? "Le coin des élu.e.s" : "Articles";
 
   return (

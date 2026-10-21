@@ -18,8 +18,6 @@ import { BLOG_CATEGORIES } from "@/lib/blog-categories";
 import BlockNoteEditor from "./blocknote-editor";
 import { useBlogEditorForm } from "./use-blog-editor-form";
 
-const RECIPIENT_EMAIL = "dimitre@free.fr";
-
 /**
  * Client form that validates article metadata and copies a publish-ready payload.
  */

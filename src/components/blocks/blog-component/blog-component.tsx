@@ -88,7 +88,7 @@ export const BlogGrid = ({
                 onClick={() => {
                   if (!onCategoryClick) return;
                   onCategoryClick(post.category);
-                  router.push(`/#category-${post.category}`);
+                  router.push(`/articles#category-${post.category}`);
                 }}
               >
                 {post.category}
@@ -144,7 +144,7 @@ const Blog = () => {
     setSelectedTab(tab);
 
     if (tab === ALL_TAB) {
-      router.push("#categories");
+      router.push("/articles");
     }
   };
 
@@ -159,7 +159,7 @@ const Blog = () => {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/#categories">Articles</BreadcrumbLink>
+                  <BreadcrumbLink href="/articles">Articles</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>

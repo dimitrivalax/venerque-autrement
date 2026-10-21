@@ -29,10 +29,10 @@ const Footer = () => {
               Accueil
             </Link>
             <Link
-              href="/#categories"
+              href="/articles"
               className="text-muted-foreground hover:text-primary transition-colors"
             >
-              Articles & programme
+              Articles
             </Link>
             <Link
               href="/le-coin-des-elus"

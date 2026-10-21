@@ -62,7 +62,9 @@ const BlogRelatedPost = ({
                   </div>
                   <Badge
                     className="bg-primary/10 text-primary cursor-pointer border-0 text-sm"
-                    onClick={() => router.push(`/#category-${post.category}`)}
+                    onClick={() =>
+                      router.push(`/articles#category-${post.category}`)
+                    }
                   >
                     {post.category}
                   </Badge>

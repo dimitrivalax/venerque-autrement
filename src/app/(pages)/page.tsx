@@ -1,5 +1,4 @@
 import HeroSection from "@/components/blocks/hero-section/hero-section";
-import Blog from "@/components/blocks/blog-component/blog-component";
 import CTA from "@/components/blocks/cta-section/cta-section";
 import { getMainBlogPosts } from "@/lib/blog-posts";
 
@@ -25,7 +24,6 @@ const Home = () => {
   return (
     <div>
       <HeroSection blogData={getMainBlogPosts()} />
-      <Blog />
       <CTA />
       <script
         type="application/ld+json"
