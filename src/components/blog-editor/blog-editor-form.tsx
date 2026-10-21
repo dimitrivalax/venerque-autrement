@@ -137,12 +137,6 @@ export default function BlogEditorForm() {
           {isCopied ? "Contenu copié" : "Copier pour publication"}
         </Button>
       </div>
-
-      <p className="text-muted-foreground text-xs">
-        Le message contient deux blocs prêts à coller : le fichier MDX
-        (`src/content/…`) et l’entrée TypeScript pour `blog-posts.ts`.
-        Destinataire : {RECIPIENT_EMAIL}.
-      </p>
     </form>
   );
 }
